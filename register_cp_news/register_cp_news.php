@@ -14,7 +14,9 @@ function register_cp_news(){
         'public' => true,
         'menu_position' => 20,
         'label' => 'News',
-        'menu_icon' => 'dashicons-admin-site-alt2'
+        'menu_icon' => 'dashicons-admin-site-alt2',
+        'show_in_rest' => true, 
+        'supports' => array('editor')
     );
     register_post_type('news', $args);
 }
@@ -47,6 +49,9 @@ function register_category_news_terms( ) {
     ));
     wp_insert_term( 'Breaking News', 'category_news', $args = array (
         'description' => 'Your Breaking News on a silver plate!'
+    ));
+    wp_insert_term( 'Old Posts', 'category_news', $args = array (
+        'description' => 'Posts from previous Wordpress website'
     ));
 }
 add_action( 'init', 'register_category_news_terms');

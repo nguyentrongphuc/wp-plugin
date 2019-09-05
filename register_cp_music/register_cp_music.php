@@ -14,7 +14,9 @@ function register_cp_music(){
         'public' => true,
         'menu_position' => 20,
         'label' => 'Music',
-        'menu_icon' => 'dashicons-format-audio'
+        'menu_icon' => 'dashicons-format-audio',
+        'show_in_rest' => true, 
+        'supports' => array('editor')
     );
     register_post_type('music', $args);
 }
@@ -25,7 +27,7 @@ function register_category_music_taxonomy() {
     $args = array(
         'hierarchical'=> true,
         'label' => 'Categories',
-        'show_in_rest' => true,
+        'show_in_rest' => true
     );
     register_taxonomy( 'category_music', array('music'), $args );
 }

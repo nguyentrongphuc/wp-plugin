@@ -14,7 +14,9 @@ function register_cp_presenter(){
         'public' => true,
         'menu_position' => 20,
         'label' => 'Presenters',
-        'menu_icon' => 'dashicons-universal-access-alt'
+        'menu_icon' => 'dashicons-universal-access-alt',
+        'show_in_rest' => true, 
+        'supports' => array('editor')
     );
     register_post_type('presenter', $args);
 }
