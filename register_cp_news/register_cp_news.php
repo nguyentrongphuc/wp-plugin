@@ -24,10 +24,10 @@ add_action('init','register_cp_news');
 function register_category_news_taxonomy() {
     $args = array(
         'hierarchical'=> true,
-        'label' => 'Category',
+        'label' => 'Categories',
         'show_in_rest' => true,
     );
-    register_taxonomy( 'category_news', array('post', 'news'), $args );
+    register_taxonomy( 'category_news', array('news'), $args );
 }
 add_action( 'init','register_category_news_taxonomy' ); 
 

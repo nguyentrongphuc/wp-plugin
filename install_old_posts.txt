@@ -1,3 +1,4 @@
 To install old posts from the former WP :
 - Tools > Import > Install Wordpress Importer
-- Run WP Importer and browse 
+- Run WP Importer and browse oldBoom.WordPress.xml
+- it will import

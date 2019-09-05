@@ -24,10 +24,10 @@ add_action('init','register_cp_music');
 function register_category_music_taxonomy() {
     $args = array(
         'hierarchical'=> true,
-        'label' => 'Category',
+        'label' => 'Categories',
         'show_in_rest' => true,
     );
-    register_taxonomy( 'category_music', array('post', 'music'), $args );
+    register_taxonomy( 'category_music', array('music'), $args );
 }
 add_action( 'init','register_category_music_taxonomy' ); 
 
