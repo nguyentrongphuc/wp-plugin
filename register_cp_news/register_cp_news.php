@@ -13,7 +13,8 @@ function register_cp_news(){
     $args = array(
         'public' => true,
         'menu_position' => 20,
-        'label' => 'News'
+        'label' => 'News',
+        'menu_icon' => 'dashicons-admin-site-alt2'
     );
     register_post_type('news', $args);
 }
@@ -26,25 +27,25 @@ function register_category_news_taxonomy() {
         'label' => 'Category',
         'show_in_rest' => true,
     );
-    register_taxonomy( 'category', array('post', 'news'), $args );
+    register_taxonomy( 'category_news', array('post', 'news'), $args );
 }
 add_action( 'init','register_category_news_taxonomy' ); 
 
 //Register Taxonomy Terms 
 function register_category_news_terms( ) {
-    wp_insert_term( 'Politics', 'category', $args = array (
+    wp_insert_term( 'Politics', 'category_news', $args = array (
         'description' => 'Let\'s talk about Politic'
     ));
-    wp_insert_term( 'Sport', 'category', $args = array (
+    wp_insert_term( 'Sport', 'category_news', $args = array (
         'description' => 'Let\'s talk about Sport'
     ));
-    wp_insert_term( 'Cinema', 'category', $args = array (
+    wp_insert_term( 'Cinema', 'category_news', $args = array (
         'description' => 'Let\'s talk about Cinema'
     ));
-    wp_insert_term( 'Music', 'category', $args = array (
+    wp_insert_term( 'Music', 'category_news', $args = array (
         'description' => 'Let\'s talk about Music'
     ));
-    wp_insert_term( 'Breaking News', 'category', $args = array (
+    wp_insert_term( 'Breaking News', 'category_news', $args = array (
         'description' => 'Your Breaking News on a silver plate!'
     ));
 }

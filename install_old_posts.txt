@@ -1,0 +1,3 @@
+To install old posts from the former WP :
+- Tools > Import > Install Wordpress Importer
+- Run WP Importer and browse 

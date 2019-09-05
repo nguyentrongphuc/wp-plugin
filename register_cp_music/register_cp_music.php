@@ -13,7 +13,8 @@ function register_cp_music(){
     $args = array(
         'public' => true,
         'menu_position' => 20,
-        'label' => 'Music'
+        'label' => 'Music',
+        'menu_icon' => 'dashicons-format-audio'
     );
     register_post_type('music', $args);
 }
@@ -26,19 +27,19 @@ function register_category_music_taxonomy() {
         'label' => 'Category',
         'show_in_rest' => true,
     );
-    register_taxonomy( 'category', array('post', 'music'), $args );
+    register_taxonomy( 'category_music', array('post', 'music'), $args );
 }
 add_action( 'init','register_category_music_taxonomy' ); 
 
 //Register Taxonomy Terms 
 function register_category_music_terms( ) {
-    wp_insert_term( 'Album', 'category', $args = array (
+    wp_insert_term( 'Album', 'category_music', $args = array (
         'description' => 'Albums of the month'
     ));
-    wp_insert_term( 'Featured Artist', 'category', $args = array (
+    wp_insert_term( 'Featured Artist', 'category_music', $args = array (
         'description' => 'Featured Artists of the month'
     ));
-    wp_insert_term( 'Event', 'category', $args = array (
+    wp_insert_term( 'Event', 'category_music', $args = array (
         'description' => 'Music Events the month'
     ));
 }
