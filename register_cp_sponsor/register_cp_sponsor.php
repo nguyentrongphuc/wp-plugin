@@ -1,25 +1,25 @@
 <?php
 /*
-Plugin Name: Register CP Presenter
+Plugin Name: Register CP Sponsor
 Plugin URI:
-Description: Register a Custom Post Type Presenter
+Description: Register a Custom Post Type Sponsor
 Version: 1.0
 Author: Fanny
 Author URI: https:creativeontheroad.com
 Licence: none
 */
 
-function register_cp_presenter(){
+function register_cp_sponsor(){
     $args = array(
         'public' => true,
         'menu_position' => 20,
-        'label' => 'Presenters',
-        'menu_icon' => 'dashicons-universal-access-alt',
+        'label' => 'Sponsors',
+        'menu_icon' => 'dashicons-groups',
         //set the post to available via the REST API 
         'show_in_rest' => true, 
         //enable block-editor / gutenberg in CP
         'supports' => array('editor')
     );
-    register_post_type('presenter', $args);
+    register_post_type('sponsors', $args);
 }
-add_action('init','register_cp_presenter');
+add_action('init','register_cp_sponsor');

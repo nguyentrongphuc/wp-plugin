@@ -15,19 +15,27 @@ function register_cp_music(){
         'menu_position' => 20,
         'label' => 'Music',
         'menu_icon' => 'dashicons-format-audio',
+        //set the post to available via the REST API 
         'show_in_rest' => true, 
+        //enable block-editor / gutenberg in CP
         'supports' => array('editor')
     );
     register_post_type('music', $args);
 }
 add_action('init','register_cp_music');
 
-//Register a Category for Music
+//Register a Custom Taxonomy Category for Music
 function register_category_music_taxonomy() {
     $args = array(
         'hierarchical'=> true,
         'label' => 'Categories',
-        'show_in_rest' => true
+        'show_in_rest' => true,
+        //disable the option to add, edit or delete the categories
+        'capabilities' => [
+            'manage_terms' => 'manage_category_music',
+            'edit_terms' => 'manage_category_music',
+            'delete_terms' => 'manage_category_music',
+            'assign_terms' => 'edit_posts'],
     );
     register_taxonomy( 'category_music', array('music'), $args );
 }
