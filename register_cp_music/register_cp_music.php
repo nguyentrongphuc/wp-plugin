@@ -10,17 +10,23 @@ Licence: none
 */
 //Register Custom Post Music
 function register_cp_music(){
-    $args = array(
-        'public' => true,
-        'menu_position' => 20,
-        'label' => 'Music',
-        'menu_icon' => 'dashicons-format-audio',
+    register_post_type('music', 
+        array(
+            'labels'    => array(
+                'name'          => __('Musics'),
+                'singular_name' => __('Music')
+            ),
+        'public'        => true,
+        'has_archive'   => true,
+        'rewrite'       => array('slug' => 'music'),
+        'menu_position'      => 20,
+        'menu_icon'      => 'dashicons-format-audio',        
         //set the post to available via the REST API 
-        'show_in_rest' => true, 
+        'show_in_rest'  => true, 
         //enable block-editor / gutenberg in CP
-        'supports' => array('editor')
-    );
-    register_post_type('cp-music', $args);
+        'supports'      => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+        )
+    );  
 }
 add_action('init','register_cp_music');
 
@@ -37,7 +43,7 @@ function register_category_music_taxonomy() {
             'delete_terms' => 'manage_category_music',
             'assign_terms' => 'edit_posts'],
     );
-    register_taxonomy( 'category_music', array('cp-music'), $args );
+    register_taxonomy( 'category_music', array('music'), $args );
 }
 add_action( 'init','register_category_music_taxonomy' ); 
 

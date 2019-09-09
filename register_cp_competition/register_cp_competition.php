@@ -10,16 +10,22 @@ Licence: none
 */
 
 function register_cp_competition(){
-    $args = array(
-        'public' => true,
-        'menu_position' => 20,
-        'label' => 'Competition',
-        'menu_icon' => 'dashicons-megaphone',
+    register_post_type('competition', 
+        array(
+            'labels'    => array(
+                'name'          => __('Competitions'),
+                'singular_name' => __('Competition')
+            ),
+        'public'        => true,
+        'has_archive'   => true,
+        'rewrite'       => array('slug' => 'competition'),
+        'menu_position'      => 20,
+        'menu_icon'      => 'dashicons-megaphone',        
         //set the post to available via the REST API 
-        'show_in_rest' => true, 
+        'show_in_rest'  => true, 
         //enable block-editor / gutenberg in CP
-        'supports' => array('editor')
-    );
-    register_post_type('cp-competition', $args);
+        'supports'      => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+        )
+    );  
 }
 add_action('init','register_cp_competition');

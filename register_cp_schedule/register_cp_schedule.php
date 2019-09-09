@@ -10,18 +10,23 @@ Licence: none
 */
 //Register Custom Post Schedule
 function register_cp_schedule(){
-    $args = array(
-        'public' => true,
-        'menu_position' => 20,
-        'label' => 'Schedule',
-        'menu_icon' => 'dashicons-calendar',
+    register_post_type('schedule', 
+        array(
+            'labels'    => array(
+                'name'          => __('Schedule'),
+                'singular_name' => __('Schedule')
+            ),
+        'public'        => true,
+        'has_archive'   => true,
+        'rewrite'       => array('slug' => 'schedule'),
+        'menu_position'      => 20,
+        'menu_icon'      => 'dashicons-calendar',        
         //set the post to available via the REST API 
-        'show_in_rest' => true, 
+        'show_in_rest'  => true, 
         //enable block-editor / gutenberg in CP
-        'supports' => array('editor'),
-        'hierarchical' => true,
-    );
-    register_post_type('cp-schedule', $args);
+        'supports'      => array( 'title', 'editor', 'author', 'thumbnail', 'comments' )
+        )
+    );  
 }
 add_action('init','register_cp_schedule');
 
@@ -38,7 +43,7 @@ function register_category_schedule_taxonomy() {
             'delete_terms' => 'manage_category_schedule',
             'assign_terms' => 'edit_posts'],
     );
-    register_taxonomy( 'category_schedule', 'cp-schedule', $args );
+    register_taxonomy( 'category_schedule', 'schedule', $args );
 }
 add_action( 'init','register_category_schedule_taxonomy' ); 
 
