@@ -9,6 +9,7 @@ Event slug: event
 Featured Artist slug: featured-artist
 
 ////News Page slug: news
+//Categories News slug: category-news
 Breaking News slug: breaking-news
 Cinema slug: cinema
 Music News slug: music-news
