@@ -3,7 +3,7 @@
 Plugin Name: Register CP Schedule
 Plugin URI:
 Description: Register a Custom Post Type Schedule and its category
-Version: 1.0
+Version: 1.2
 Author: Fanny
 Author URI: https:creativeontheroad.com
 Licence: none
@@ -19,6 +19,7 @@ function register_cp_schedule(){
         'show_in_rest' => true, 
         //enable block-editor / gutenberg in CP
         'supports' => array('editor'),
+        'hierarchical' => true,
     );
     register_post_type('schedule', $args);
 }
@@ -37,38 +38,21 @@ function register_category_schedule_taxonomy() {
             'delete_terms' => 'manage_category_schedule',
             'assign_terms' => 'edit_posts'],
     );
-    register_taxonomy( 'category_schedule', array('schedule'), $args );
+    register_taxonomy( 'category_schedule', 'schedule', $args );
 }
 add_action( 'init','register_category_schedule_taxonomy' ); 
 
 
-function register_subcategory_speciality_taxonomy() {
-    $args = array(
-        'hierarchical'=> true,
-        'label' => 'Speciality Shows',
-    );
-    register_taxonomy( 'speciality-shows', array('schedule'), $args );
-}
-add_action( 'init','register_subcategory_speciality_taxonomy' ); 
-
 //Register Taxonomy Terms 
 function register_category_schedule_terms( ) {
     wp_insert_term( 'Big Breakfast', 'category_schedule', $args = array (
-        'description' => 'BOOM’s Big Breakfast show'
+        'description' => 'BOOM’s Big Breakfast Show'
     ));
     wp_insert_term( 'The Drive Home', 'category_schedule', $args = array (
         'description' => 'The Drive Home Show'
     ));
-    // wp_insert_term( 'Speciality Shows', 'category_schedule', $args = array (
-    //     'description' => 'Speciality Shows',
-    //     'slug' => 'speciality-shows',
-    // ));
-    //To declare children categories
-    $parent_term = term_exists('boombackyard');//get all the Parents for this taxonomy.
-    wp_insert_term( 'BOOM\'s Backyard', 'category_schedule', $args = array (
-        'description' => 'BOOM\'s Backyard',
-        'child_of' => $parent_term['term_id'],
+    wp_insert_term( 'Speciality Shows', 'category_schedule', $args = array (
+        'description' => 'Speciality Shows',
     ));
 }
 add_action( 'init', 'register_category_schedule_terms');
-
