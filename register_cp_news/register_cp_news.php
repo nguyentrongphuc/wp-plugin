@@ -35,6 +35,7 @@ function register_category_news_taxonomy() {
     $args = array(
         'hierarchical'=> true,
         'label' => 'Categories',
+        'show_admin_column' => true,
         'show_in_rest' => true,
         //disable the option to add, edit or delete the categories
         'capabilities' => [

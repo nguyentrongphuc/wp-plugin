@@ -35,6 +35,7 @@ function register_category_schedule_taxonomy() {
     $args = array(
         'hierarchical'=> true,
         'label' => 'Shows',
+        'show_admin_column' => true,
         'show_in_rest' => true,
         //disable the option to add, edit or delete the categories
         'capabilities' => [

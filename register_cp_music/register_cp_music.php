@@ -36,6 +36,7 @@ function register_category_music_taxonomy() {
         'hierarchical'=> true,
         'label' => 'Categories',
         'show_in_rest' => true,
+        'show_admin_column' => true,
         //disable the option to add, edit or delete the categories
         'capabilities' => [
             'manage_terms' => 'manage_category_music',
