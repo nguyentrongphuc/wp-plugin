@@ -20,6 +20,6 @@ function register_cp_sponsor(){
         //enable block-editor / gutenberg in CP
         'supports' => array('editor')
     );
-    register_post_type('sponsors', $args);
+    register_post_type('cp-sponsors', $args);
 }
 add_action('init','register_cp_sponsor');

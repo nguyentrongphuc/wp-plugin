@@ -20,6 +20,6 @@ function register_cp_presenter(){
         //enable block-editor / gutenberg in CP
         'supports' => array('editor')
     );
-    register_post_type('presenter', $args);
+    register_post_type('cp-presenter', $args);
 }
 add_action('init','register_cp_presenter');

@@ -20,6 +20,6 @@ function register_cp_competition(){
         //enable block-editor / gutenberg in CP
         'supports' => array('editor')
     );
-    register_post_type('competition', $args);
+    register_post_type('cp-competition', $args);
 }
 add_action('init','register_cp_competition');

@@ -20,7 +20,7 @@ function register_cp_news(){
         //enable block-editor / gutenberg in CP
         'supports' => array('editor')
     );
-    register_post_type('news', $args);
+    register_post_type('cp-news', $args);
 }
 add_action('init','register_cp_news');
 
@@ -37,7 +37,7 @@ function register_category_news_taxonomy() {
             'delete_terms' => 'manage_category_news',
             'assign_terms' => 'edit_posts'],
     );
-    register_taxonomy( 'category_news', array('news'), $args );
+    register_taxonomy( 'category_news', array('cp-news'), $args );
 }
 add_action( 'init','register_category_news_taxonomy' ); 
 
@@ -52,7 +52,7 @@ function register_category_news_terms( ) {
     wp_insert_term( 'Cinema', 'category_news', $args = array (
         'description' => 'Let\'s talk about Cinema'
     ));
-    wp_insert_term( 'Music', 'category_news', $args = array (
+    wp_insert_term( 'Music News', 'category_news', $args = array (
         'description' => 'Let\'s talk about Music'
     ));
     wp_insert_term( 'Breaking News', 'category_news', $args = array (

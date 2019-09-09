@@ -3,7 +3,7 @@
 Plugin Name: Register CP Music
 Plugin URI:
 Description: Register a Custom Post Type Music and its category
-Version: 1.0
+Version: 1.1
 Author: Fanny
 Author URI: https:creativeontheroad.com
 Licence: none
@@ -20,7 +20,7 @@ function register_cp_music(){
         //enable block-editor / gutenberg in CP
         'supports' => array('editor')
     );
-    register_post_type('music', $args);
+    register_post_type('cp-music', $args);
 }
 add_action('init','register_cp_music');
 
@@ -37,7 +37,7 @@ function register_category_music_taxonomy() {
             'delete_terms' => 'manage_category_music',
             'assign_terms' => 'edit_posts'],
     );
-    register_taxonomy( 'category_music', array('music'), $args );
+    register_taxonomy( 'category_music', array('cp-music'), $args );
 }
 add_action( 'init','register_category_music_taxonomy' ); 
 

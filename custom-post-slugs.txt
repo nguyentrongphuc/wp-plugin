@@ -1,0 +1,29 @@
+Custom Post slugs:
+
+////Competion Page slug: cp-competition
+
+////Music Page slug: cp-music
+//Categories slug: category-music
+Album slug: album
+Event slug: event
+Featured Artist slug: featured-artist
+
+////News Page slug: cp-news
+Breaking News slug: breaking-news
+Cinema slug: cinema
+Music News slug: music-news
+Old Posts slug: old-posts
+Politics slug: politics
+Sport slug: sport
+
+////Presenters slug: cp-presenter
+
+////Schedule slug: cp-schedule
+//Shows slug: category-schedule
+Big Breakfast: big-breakfast
+The Drive Home:	the-drive-home
+Speciality Shows: speciality-shows
+
+//Sponsors slug: cp-sponsors
+
+Event : event

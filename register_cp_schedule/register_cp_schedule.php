@@ -21,7 +21,7 @@ function register_cp_schedule(){
         'supports' => array('editor'),
         'hierarchical' => true,
     );
-    register_post_type('schedule', $args);
+    register_post_type('cp-schedule', $args);
 }
 add_action('init','register_cp_schedule');
 
@@ -38,7 +38,7 @@ function register_category_schedule_taxonomy() {
             'delete_terms' => 'manage_category_schedule',
             'assign_terms' => 'edit_posts'],
     );
-    register_taxonomy( 'category_schedule', 'schedule', $args );
+    register_taxonomy( 'category_schedule', 'cp-schedule', $args );
 }
 add_action( 'init','register_category_schedule_taxonomy' ); 
 
@@ -46,7 +46,7 @@ add_action( 'init','register_category_schedule_taxonomy' );
 //Register Taxonomy Terms 
 function register_category_schedule_terms( ) {
     wp_insert_term( 'Big Breakfast', 'category_schedule', $args = array (
-        'description' => 'BOOM’s Big Breakfast Show'
+        'description' => 'BOOM’s Big Breakfast Show',
     ));
     wp_insert_term( 'The Drive Home', 'category_schedule', $args = array (
         'description' => 'The Drive Home Show'
