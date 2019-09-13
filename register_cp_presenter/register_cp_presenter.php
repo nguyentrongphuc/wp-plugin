@@ -24,7 +24,7 @@ function register_cp_presenter(){
         //set the post to available via the REST API 
         'show_in_rest'  => true, 
         //enable block-editor / gutenberg in CP
-        'supports'      => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+        'supports'      => array( 'title', 'editor', 'author', 'thumbnail', 'comments', 'custom-fields' )
         )
     );  
 }
