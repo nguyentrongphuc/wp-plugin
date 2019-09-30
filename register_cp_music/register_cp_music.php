@@ -57,8 +57,9 @@ add_action('init', 'register_category_music_taxonomy');
 //Register Taxonomy Terms 
 function register_category_music_terms()
 {
-    wp_insert_term('Album', 'category_music', $args = array(
-        'description' => 'Albums of the month'
+    //TASK- TO BE UPDATED TO ARTISTS FOR LIVE SITE
+    wp_insert_term('Artists', 'category_music', $args = array(
+        'description' => 'New Music we like'
     ));
     wp_insert_term('Featured Artist', 'category_music', $args = array(
         'description' => 'Featured Artists of the month'
