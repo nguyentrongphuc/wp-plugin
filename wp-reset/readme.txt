@@ -1,29 +1,29 @@
 === WP Reset - Best WordPress Reset Plugin ===
-Tags: wordpress reset, reset database, reset wordpress database, reset, advanced wordpress reset, restart wordpress, clean wordpress, default wordpress, reset wp, wp reset, developer, wp-cli
+Tags: wordpress reset, reset database, reset wordpress database, reset, advanced wordpress reset, restart wordpress, clean wordpress, default wp, default wordpress, reset wp, wp reset, developer, wp-cli, webhooks, backup, database backup
 Contributors: WebFactory, wpreset, googlemapswidget, underconstructionpage
 Requires at least: 4.0
 Requires PHP: 5.2
 Tested up to: 5.2
-Stable tag: 1.65
+Stable tag: 1.70
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress Reset resets any WordPress site to the default values without modifying any files. It deletes all customizations and content. Safe to use.
+WP Reset resets a WordPress site, or just the chosen parts, to the default values. It's safe to use with built-in 1-click backup.
 
 == Description ==
 
-<a href="https://wpreset.com/?utm_source=wordpressorg&utm_medium=content&utm_campaign=wp-reset&utm_term=wp-reset-top">WP Reset</a> quickly resets the site's database to the default installation values without modifying any files. It deletes all customizations and content. WP Reset is fast and safe to use. It has multiple fail-safe mechanisms so you can never accidentally lose data. WP Reset is extremely helpful for plugin and theme developers. It **speeds up testing and debugging** by providing a quick way to reset settings and re-test code. It was developed by developers for developers.
+<a href="https://wpreset.com/?utm_source=wordpressorg&utm_medium=content&utm_campaign=wp-reset&utm_term=wp-reset-top">WP Reset</a> quickly resets the site's database to the default installation values without modifying any files. It deletes all customizations and content, or just chosen parts like theme settings. WP Reset is fast and safe to use thanks to the built-in 1-click backup function. It has multiple fail-safe mechanisms so you can never accidentally lose data. WP Reset is extremely helpful for plugin and theme developers. It **speeds up testing & debugging** by providing a quick way to reset settings and re-test code. It's the only WP development tool for non-developers.
 
 https://youtu.be/qMnkCW2PFoI?rel=0
 
-For support please use the <a href="https://wordpress.org/support/plugin/wp-reset">forums</a>, and if you need more information visit <a href="https://wpreset.com/?utm_source=wordpressorg&utm_medium=content&utm_campaign=wp-reset&utm_term=wpreset.com">wpreset.com</a> and be sure to check out the <a href="https://wpreset.com/roadmap/?utm_source=wordpressorg&utm_medium=content&utm_campaign=wp-reset&utm_term=roadmap">roadmap</a> for the list of upcoming features.
+For support please use the <a href="https://wordpress.org/support/plugin/wp-reset">official forum</a>, and if you need more information visit <a href="https://wpreset.com/?utm_source=wordpressorg&utm_medium=content&utm_campaign=wp-reset&utm_term=wpreset.com">wpreset.com</a> and be sure to check out the <a href="https://wpreset.com/roadmap/?utm_source=wordpressorg&utm_medium=content&utm_campaign=wp-reset&utm_term=roadmap">roadmap</a> for the list of upcoming features.
 
 Access WP Reset admin page via the "Tools" menu.
 
-WP Reset is fully integrated with <a href="https://wordpress.org/plugins/wp-webhooks/">WP Webhooks</a> plugin - a secure, universal system that connects WP to any 3rd party systems and enables you to initiate actions both from WPs end (for instance start a MailChimp campaign once a new user registers), and from any other application (create a new user in WP when a purchase is made on a 3rd party system). View more <a href="https://underconstructionpage.com/wp-webhooks-connect-integrate-wordpress/" target="_blank">practical use-cases</a> that save hours of repetitive work.
+WP Reset is fully integrated with <a href="https://wordpress.org/plugins/wp-webhooks/">WP Webhooks</a> plugin - a secure, universal system that connects WP to any 3rd party systems and enables you to initiate actions both from WordPress (for instance start a MailChimp campaign once a new user registers), and from any other application (create a new user in WP when a purchase is made on a 3rd party system). View more <a href="https://underconstructionpage.com/wp-webhooks-connect-integrate-wordpress/" target="_blank">practical use-cases</a> that save hours of repetitive work.
 
 
-**Please read carefully before proceeding to understand what WP Reset does**
+**Please read carefully before proceeding to understand what WP Reset does, and remember to always create a backup**
 
 #### Resetting will delete:
 
@@ -40,11 +40,16 @@ WP Reset is fully integrated with <a href="https://wordpress.org/plugins/wp-webh
 
 #### What happens when I click the Reset button?
 
+* remember to always make a backup first
 * you will have to confirm the action one more time because there is NO UNDO
 * everything will be reset; see bullets above for details
 * site title, WordPress address, site address, site language, search engine visibility settings as well as the current user will be restored
 * you will be logged out, automatically logged in and taken to the admin dashboard
 * WP Reset plugin will be reactivated if that option is chosen in the post-reset options
+
+#### 1-click Backup Tool
+
+WP Reset comes with built-in backup functionality. Before deleting any data or running any reset tools make sure you download a fresh backup. Click any of the "download backup" links in the plugin, wait a few seconds till the backup is created and then save it to your computer. WP Reset does not backup any files! So the ZIP you download will only contain the full database; no files are included or saved anywhere.
 
 #### WP-CLI support
 
@@ -97,11 +102,20 @@ Or if needed, upload manually;
 
 == Screenshots ==
 
-1. WP Reset admin page
-2. Reset action has to be double-confirmed
+1. WP Reset - main reset page
+2. All reset actions have to be confirmed
 3. Additional tools for resetting and deleting various WordPress objects
+4. Database Snapshots enable 1-click restoring and testing
+5. Use our 1-click backup feature before running any reset tools
 
 == Changelog ==
+
+= v1.70 =
+* 2019/09/27
+* bug fixes
+* completely new GUI
+* added .htaccess file to protect snapshots and backups folder
+* added 1-click backup feature
 
 = v1.65 =
 * 2019/07/15
@@ -189,13 +203,17 @@ Or if needed, upload manually;
 
 == Frequently Asked Questions ==
 
+= Does WP Reset make backups? =
+
+Automatically no, it does not. But we have "download backup" links besides every tool in the plugin so make sure you download a backup before running them. Backups only contain the database, no files!
+
 = How can I log in after resetting? =
 
 Use the same username and password you used while doing the reset. Only one user will be restored after resetting. The one you used at that time.
 
-= Will any files be deleted or modified? =
+= Will any files be deleted or modified when I reset the site? =
 
-No. All files are left untouched.
+No. All files are left untouched if you do a full reset. However, there are tool like "delete themes" that do delete files.
 
 = Will I have to reconfigure wp-config.php? =
 

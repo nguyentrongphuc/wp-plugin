@@ -1,4 +1,5 @@
 <?php
+
 /**
  * WP Reset
  * https://wpreset.com/
@@ -19,32 +20,32 @@ class WP_Reset_CLI extends WP_CLI_Command
 {
 
   /**
-     * Reset the site database to default values. No files are modified.
-     *
-     * ## OPTIONS
-     *
-     * [--reactivate-theme]
-     * : Reactivate currently active theme after reset.
-     *
-     * [--reactivate-plugins]
-     * : Reactivate all currently active plugins after reset.
-     *
-     * [--reactivate-webhooks]
-     * : Reactivate WP Webhooks plugin after reset.
-     *
-     * [--deactivate-wp-reset]
-     * : Deactivate WP Reset plugin after reset. By default it will stay active after reset.
-     *
-     * [--yes]
-     * : Answer yes to the confirmation message.
-     *
-     * ## EXAMPLES
-     *
-     * $ wp reset reset --yes
-     * Success: Database has been reset.
-     *
-     * @when after_wp_load
-     */
+   * Reset the site database to default values. No files are modified.
+   *
+   * ## OPTIONS
+   *
+   * [--reactivate-theme]
+   * : Reactivate currently active theme after reset.
+   *
+   * [--reactivate-plugins]
+   * : Reactivate all currently active plugins after reset.
+   *
+   * [--reactivate-webhooks]
+   * : Reactivate WP Webhooks plugin after reset.
+   *
+   * [--deactivate-wp-reset]
+   * : Deactivate WP Reset plugin after reset. By default it will stay active after reset.
+   *
+   * [--yes]
+   * : Answer yes to the confirmation message.
+   *
+   * ## EXAMPLES
+   *
+   * $ wp reset reset --yes
+   * Success: Database has been reset.
+   *
+   * @when after_wp_load
+   */
   function reset($args, $assoc_args)
   {
     WP_CLI::confirm('Are you sure you want to reset the site? There is NO UNDO!', $assoc_args);
@@ -77,10 +78,10 @@ class WP_Reset_CLI extends WP_CLI_Command
 
 
   /**
-     * Display WP Reset version.
-     *
-     * @when after_wp_load
-     */
+   * Display WP Reset version.
+   *
+   * @when after_wp_load
+   */
   function version($args, $assoc_args)
   {
     global $wp_reset;
@@ -90,32 +91,32 @@ class WP_Reset_CLI extends WP_CLI_Command
 
 
   /**
-     * Delete selected WordPress objects.
-     *
-     * ## OPTIONS
-     *
-     * <plugins|themes|transients|uploads|custom-tables|htaccess|theme-options>
-     * : WP objects to delete.
-     *
-     * [--yes]
-     * : Answer yes to the confirmation message.
-     *
-     * [--empty]
-     * : Empty (truncate) custom tables instead of deleting (dropping) them.
-     *
-     * ## EXAMPLES
-     *
-     * $ wp reset delete themes --yes
-     * Success: 3 themes have been deleted.
-     *
-     * $ wp reset delete custom-tables --truncate --yes
-     * Success: 3 custom tables have been emptied.
-     *
-     * $ wp reset delete htaccess --yes
-     * Success: Htaccess file has been deleted.
-     *
-     * @when after_wp_load
-     */
+   * Delete selected WordPress objects.
+   *
+   * ## OPTIONS
+   *
+   * <plugins|themes|transients|uploads|custom-tables|htaccess|theme-options>
+   * : WP objects to delete.
+   *
+   * [--yes]
+   * : Answer yes to the confirmation message.
+   *
+   * [--empty]
+   * : Empty (truncate) custom tables instead of deleting (dropping) them.
+   *
+   * ## EXAMPLES
+   *
+   * $ wp reset delete themes --yes
+   * Success: 3 themes have been deleted.
+   *
+   * $ wp reset delete custom-tables --truncate --yes
+   * Success: 3 custom tables have been emptied.
+   *
+   * $ wp reset delete htaccess --yes
+   * Success: Htaccess file has been deleted.
+   *
+   * @when after_wp_load
+   */
   function delete($args, $assoc_args)
   {
     global $wp_reset, $wpdb;
@@ -184,35 +185,35 @@ class WP_Reset_CLI extends WP_CLI_Command
 
 
   /**
-     * List and manipulate DB snapshots.
-     *
-     * ## OPTIONS
-     *
-     * <list|create|restore|export|delete>
-     * : Action to perform with snapshot.
-     *
-     * [--yes]
-     * : Answer yes to the confirmation message.
-     *
-     * [--id=<snapshot-id>]
-     * : Specify snapshot ID when doing restore, export and delete.
-     *
-     * [--name=<snapshot-name>]
-     * : When creating a new snapshot specify an optional name.
-     *
-     * ## EXAMPLES
-     *
-     * wp reset snapshots create --yes
-     * Success: New snapshot with ID 089bea has been created.
-     *
-     * $ wp reset snapshots delete --id=123456
-     * Success: Snapshot has been deleted.
-     *
-     * $ wp reset snapshots export --id=123456
-     * Success: Snapshot has been exported and saved to: https://test.site/wp-content/wp-reset-snapshots-export/wp-reset-snapshot-123456.sql.gz
-     *
-     * @when after_wp_load
-     */
+   * List and manipulate DB snapshots.
+   *
+   * ## OPTIONS
+   *
+   * <list|create|restore|export|delete>
+   * : Action to perform with snapshot.
+   *
+   * [--yes]
+   * : Answer yes to the confirmation message.
+   *
+   * [--id=<snapshot-id>]
+   * : Specify snapshot ID when doing restore, export and delete.
+   *
+   * [--name=<snapshot-name>]
+   * : When creating a new snapshot specify an optional name.
+   *
+   * ## EXAMPLES
+   *
+   * wp reset snapshots create --yes
+   * Success: New snapshot with ID 089bea has been created.
+   *
+   * $ wp reset snapshots delete --id=123456
+   * Success: Snapshot has been deleted.
+   *
+   * $ wp reset snapshots export --id=123456
+   * Success: Snapshot has been exported and saved to: https://test.site/wp-content/wp-reset-snapshots-export/wp-reset-snapshot-123456.sql.gz
+   *
+   * @when after_wp_load
+   */
   function snapshots($args, $assoc_args)
   {
     global $wp_reset;
@@ -317,6 +318,78 @@ class WP_Reset_CLI extends WP_CLI_Command
         return;
     }
   } // snapshots
+
+
+  /**
+   * Manipulate backups.
+   *
+   * ## OPTIONS
+   *
+   * <create|list>
+   * : Actions to take with backup(s).
+   *
+   * ## EXAMPLES
+   *
+   * $ wp reset backup create
+   * Success: New backup created; /wp-content/wp-reset-backups/wp-reset-backup-site-com-2019-09-25-16-44-37-654a.sql.gz
+   *
+   * $ wp reset backup list
+   * Success: 2 backups found.
+   * ---
+   * -
+   * file: /wp-content/wp-reset-backups/wp-reset-backup-site-com-2019-09-24-15-35-55-6514.sql.gz
+   * -
+   * file: /wp-content/wp-reset-backups/wp-reset-backup-site-com-2019-09-24-15-38-09-45ab.sql.gz
+   *
+   * @when after_wp_load
+   */
+  function backup($args, $assoc_args)
+  {
+    global $wp_reset;
+
+    if (empty($args[0])) {
+      WP_CLI::error('Please choose a subcommand: create or list.');
+      return;
+    } elseif (false == in_array($args[0], array('create', 'list'))) {
+      WP_CLI::error('Unknown subcommand. Please choose from: create or list.');
+    } else {
+      $subcommand = $args[0];
+    }
+
+    switch ($subcommand) {
+      case 'create':
+        $filename = $wp_reset->do_create_backup(true);
+        if (is_wp_error($filename)) {
+          WP_CLI::error('Unable to create new backup. ' . $filename->get_error_message());
+        } else {
+          WP_CLI::success('New backup created: /wp-content/' . $wp_reset->backups_folder . '/' . $filename);
+        }
+        break;
+      case 'list':
+        $out = array();
+        $files = @scandir(trailingslashit(WP_CONTENT_DIR) . $wp_reset->backups_folder . '/');
+        if (false === $files || !is_array($files)) {
+          WP_CLI::error('Unable to open backups folder.');
+        } else {
+          foreach ($files as $file) {
+            if (substr($file, -3) == '.gz') {
+              $out[] = array('file' => '/wp-content/' . $wp_reset->backups_folder . '/' . $file);
+            }
+          } // foreach
+          if ($out) {
+            WP_CLI::success(sizeof($out) . ' backup' . (sizeof($out) == 1 ? '' : 's') . ' found.');
+            WP_CLI\Utils\format_items('yaml', $out, array('file'));
+          } else {
+            WP_CLI::error('No backups found.');
+          }
+        }
+        break;
+      default:
+        // should never come to this but can't hurt
+        WP_CLI::error('Unknown subcommand. Please choose from: create or list.');
+        return;
+    }
+  } // backup
 } // WP_Reset_CLI
 
 WP_CLI::add_command('reset', 'WP_Reset_CLI');
