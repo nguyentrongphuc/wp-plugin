@@ -37,7 +37,7 @@ function register_category_music_taxonomy()
 {
     $args = array(
         'hierarchical' => true,
-        'label' => 'Categories',
+        'label' => 'Music',
         'show_in_rest' => true,
         'show_admin_column' => true,
         //Added too call loop

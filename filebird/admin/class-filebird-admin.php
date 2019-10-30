@@ -100,12 +100,15 @@ class FileBird_Admin
 
     public function enqueue_PageBuilder()
     {
-            add_action('wp_enqueue_scripts', array($this, 'nt_upload'));
-            add_action('wp_enqueue_scripts', function(){
-              wp_enqueue_style('njt-filebird-admin', plugin_dir_url(__FILE__) . 'css/filebird-admin.css', array(), $this->version, 'all');
-              wp_style_add_data('njt-filebird-admin', 'rtl', 'replace');
-            });
-
+            $filebird_option = get_option('filebird_setting');
+            $unloadFrontend = $filebird_option ? $filebird_option['unload-frontend'] : false;
+            if(!$unloadFrontend){
+                add_action('wp_enqueue_scripts', array($this, 'nt_upload'));
+                add_action('wp_enqueue_scripts', function(){
+                    wp_enqueue_style('njt-filebird-admin', plugin_dir_url(__FILE__) . 'css/filebird-admin.css', array(), $this->version, 'all');
+                    wp_style_add_data('njt-filebird-admin', 'rtl', 'replace');
+                });
+            }
             FileBird_Topbar::filebird_filters_enqueue_scripts();
     }
 

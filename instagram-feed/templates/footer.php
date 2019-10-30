@@ -3,7 +3,7 @@
  * Custom Feeds for Instagram Footer Template
  * Adds pagination and html for errors and resized images
  *
- * @version 2.0 Custom Feeds for Instagram Free by Smash Balloon
+ * @version 2.1 Instagram Feed by Smash Balloon
  *
  */
 
@@ -31,13 +31,8 @@ $load_button_text = __( $settings['buttontext'], 'instagram-feed' );
 	<?php endif; ?>
 
 	<?php if ( $first_username && $show_follow_button ) : ?>
-        <span class="sbi_follow_btn<?php echo esc_attr( $follow_btn_classes ); ?>">
-        <a href="<?php echo esc_url( 'https://www.instagram.com/' . $first_username ); ?>" <?php echo $follow_btn_style; ?> target="_blank" rel="noopener">
-            <?php
-            echo SB_Instagram_Display_Elements::get_icon( 'instagram', $icon_type );
-            echo esc_html( $follow_button_text );
-            ?>
-        </a>
+    <span class="sbi_follow_btn<?php echo esc_attr( $follow_btn_classes ); ?>">
+        <a href="<?php echo esc_url( 'https://www.instagram.com/' . $first_username ); ?>" <?php echo $follow_btn_style; ?> target="_blank" rel="noopener"><?php echo SB_Instagram_Display_Elements::get_icon( 'instagram', $icon_type );echo esc_html( $follow_button_text ); ?></a>
     </span>
 	<?php endif; ?>
 

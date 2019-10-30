@@ -679,23 +679,6 @@ class Sassy_Social_Share_Follow_Widget extends WP_Widget {
 		
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 		?>
-		<script type="text/javascript">
-			function heateorSssFloatingAlignment(val) {
-				if (val == 'floating' ) {
-					jQuery( '.heateorSssFloatingAlignment' ).css( 'display', 'block' );
-				} else {
-					jQuery( '.heateorSssFloatingAlignment' ).css( 'display', 'none' );
-				}
-				jQuery( '#<?php echo $this->get_field_id( 'alignment_value_label' ); ?>' ).text('<?php _e( 'Right offset', 'sassy-social-share' ) ?>' );
-			}
-			function heateorSssAlignmentOffsetLabel(val) {
-				if (val == 'left' ) {
-					jQuery( '#<?php echo $this->get_field_id( 'alignment_value_label' ); ?>' ).text('<?php _e( 'Left offset', 'sassy-social-share' ) ?>' );
-				} else {
-					jQuery( '#<?php echo $this->get_field_id( 'alignment_value_label' ); ?>' ).text('<?php _e( 'Right offset', 'sassy-social-share' ) ?>' );
-				}
-			}
-		</script>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'before_widget_content' ); ?>"><?php _e( 'Before widget content:', 'sassy-social-share' ); ?></label> 
 			<input class="widefat" id="<?php echo $this->get_field_id( 'before_widget_content' ); ?>" name="<?php echo $this->get_field_name( 'before_widget_content' ); ?>" type="text" value="<?php echo $instance['before_widget_content']; ?>" /><br/><br/>
@@ -710,7 +693,7 @@ class Sassy_Social_Share_Follow_Widget extends WP_Widget {
 			}?>><label for="<?php echo $this->get_field_id( 'mode_floating' ); ?>"> <?php _e( 'Floating', 'sassy-social-share' ) ?></label><br><br>
 
 			<div class="heateorSssFloatingAlignment"
-				<?php echo $instance['type'] == 'standard' ? 'style="display:none"' : '' ?>>
+				<?php echo $instance['type'] == 'standard' ? "style='display:none'" : "style='display:block'" ?>>
 				<label for="<?php echo $this->get_field_id( 'top_offset' ); ?>">
 				<?php _e( 'Top offset:', 'sassy-social-share' ) ?>
 				</label>
@@ -735,7 +718,8 @@ class Sassy_Social_Share_Follow_Widget extends WP_Widget {
 				<br>
 				<br>
 				<label id="<?php echo $this->get_field_id( 'alignment_value_label' ); ?>" for="<?php echo $this->get_field_id( 'alignment_value' ); ?>">
-				<?php echo $instance['alignment'] == 'right' ? __( 'Right offset', 'sassy-social-share' ) : __( 'Left offset', 'sassy-social-share' ) ?>
+				<?php
+				echo $instance['alignment'] == 'right' ? __( 'Right offset', 'sassy-social-share' ) : __( 'Left offset', 'sassy-social-share' ) ?>
 				</label>
 				<br>
 				<input id='<?php echo $this->get_field_id( 'alignment_value' ); ?>' type="text" name="<?php echo $this->get_field_name( 'alignment_value' ); ?>" value="<?php echo $instance['alignment_value']; ?>" />px<br><br>
@@ -748,6 +732,26 @@ class Sassy_Social_Share_Follow_Widget extends WP_Widget {
 				<option value="round" <?php echo ! isset( $instance['icon_shape'] ) || $instance['icon_shape'] == 'round' ? 'selected' : '' ; ?>><?php _e( 'Round', 'sassy-social-share' ); ?></option>
 				<option value="square" <?php echo isset( $instance['icon_shape'] ) && $instance['icon_shape'] == 'square' ? 'selected' : '' ; ?>><?php _e( 'Square', 'sassy-social-share' ); ?></option>
 			</select><br/><br/>
+			<script type="text/javascript">
+			function heateorSssFloatingAlignment(val) {
+				if (val == 'floating' ) {
+					jQuery( '.heateorSssFloatingAlignment' ).css( 'display', 'block' );
+				} else {
+					jQuery( '.heateorSssFloatingAlignment' ).css( 'display', 'none' );
+				}
+			}
+			function heateorSssAlignmentOffsetLabel(val) {
+				if (val == 'left' ) {
+					jQuery("label:contains('<?php _e( 'Right offset', 'sassy-social-share' ) ?>')").text('<?php _e( 'Left offset', 'sassy-social-share' ) ?>' );
+				} else {
+					jQuery("label:contains('<?php _e( 'Left offset', 'sassy-social-share' ) ?>')").text('<?php _e( 'Right offset', 'sassy-social-share' ) ?>' );
+				}
+			}
+			jQuery(function(){
+				heateorSssFloatingAlignment('<?php echo $instance['type'] ?>');
+				heateorSssAlignmentOffsetLabel('<?php echo $instance['alignment'] ?>');
+			});
+			</script>
 			<label for="<?php echo $this->get_field_id( 'custom_color' ); ?>"><?php _e( 'Apply icon color and background color from Theme Selection section:', 'sassy-social-share' ); ?></label> 
 			<select style="width: 95%" class="widefat" id="<?php echo $this->get_field_id( 'custom_color' ); ?>" name="<?php echo $this->get_field_name( 'custom_color' ); ?>">
 				<option value="" <?php echo ! isset( $instance['custom_color'] ) || $instance['custom_color'] == '' ? 'selected' : '' ; ?>><?php _e( 'No', 'sassy-social-share' ); ?></option>

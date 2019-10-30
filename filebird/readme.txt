@@ -120,6 +120,13 @@ If you have a large files and want to use more than 10 folders/categories, you c
 
 == Changelog ==
 
+= 2.5 =
+- Added: Option turn on/off load FileBird JS at front-end for page builders
+- Improved: Removed CDN for customScrollBar
+- Fixed: Small bug will Elementor
+- Fixed: Select option doesn’t not change in modal popup upload
+- Fixed: Only call move image when moving folder position
+
 = 2.4.2 =
 - Fixed: Go Pro version links
 

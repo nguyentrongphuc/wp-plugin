@@ -171,7 +171,11 @@ class FileBird_Topbar
 
     public static function filebird_filters_enqueue_scripts()
     {
-        add_action('wp_enqueue_scripts', array('FileBird_Topbar','filebird_enqueue_media_action'));
+        $filebird_option = get_option('filebird_setting');
+        $unloadFrontend = $filebird_option ? $filebird_option['unload-frontend'] : false;
+        if(!$unloadFrontend){
+            add_action('wp_enqueue_scripts', array('FileBird_Topbar','filebird_enqueue_media_action'));
+        }
         add_action('admin_enqueue_scripts', array('FileBird_Topbar','filebird_enqueue_media_action'));
     }
 
@@ -235,7 +239,11 @@ class FileBird_Topbar
         wp_enqueue_script('njt-filebird-upload-localize');
         wp_enqueue_style('njt-filebird-treeview', plugins_url('admin/css/filebird-treeview.css', dirname(__FILE__)), array(), NJT_FILEBIRD_VERSION);
         wp_style_add_data('njt-filebird-treeview', 'rtl', 'replace');
-        wp_enqueue_script('filebird-admin-topbar', plugins_url('admin/js/filebird-admin-topbar.js', dirname(__FILE__)), array('media-views'), NJT_FILEBIRD_VERSION, true);
+        if(!defined('ELEMENTOR_VERSION')){
+            wp_enqueue_script('filebird-admin-topbar', plugins_url('admin/js/filebird-admin-topbar.js', dirname(__FILE__)), array('media-views'), NJT_FILEBIRD_VERSION, true);
+        } else {
+            wp_enqueue_script('filebird-admin-topbar', plugins_url('admin/js/filebird-admin-topbar.js', dirname(__FILE__)), array(), NJT_FILEBIRD_VERSION, true);
+        }
     }
 
     /**

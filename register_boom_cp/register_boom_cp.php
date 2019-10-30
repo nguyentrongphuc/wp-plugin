@@ -1,0 +1,362 @@
+<?php
+/*
+Plugin Name: Register Boom Custom Posts
+Plugin URI:
+Description: Register a Custom Post Types (for BOOM site)
+Version: 1.0
+Author: Alex/John/Fanny
+Author URI:
+Licence: none
+*/
+
+//------------------Register Custom Post type for About--------------------------
+function register_cp_about()
+{
+    register_post_type(
+        'about',
+        array(
+            'labels'    => array(
+                'name'          => __('About BOOM')
+            ),
+            'public'        => true,
+            'has_archive'   => true,
+            'rewrite'       => array('slug' => 'about-boom'),
+            'menu_position'      => 20,
+            'menu_icon'      => 'dashicons-info', //set the post icon to the "i" info via the REST API
+            'show_in_rest'  => true, //if you want to enable the Gutemberg editor this needs to be set as true
+            'supports'      => array('title', 'editor', 'author', 'thumbnail') //enable block-editor / gutenberg in CP
+        )
+    );
+}
+add_action('init', 'register_cp_about');
+
+
+function register_cp_competition()
+{
+    register_post_type(
+        'competition',
+        array(
+            'labels'    => array(
+                'name'          => __('Competitions'),
+                'singular_name' => __('Competition')
+            ),
+            'public'        => true,
+            'has_archive'   => true,
+            'rewrite'       => array('slug' => 'competition'),
+            'menu_position'      => 20,
+            'menu_icon'      => 'dashicons-megaphone',
+            //set the post to available via the REST API 
+            'show_in_rest'  => true,
+            //enable block-editor / gutenberg in CP
+            'supports'      => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments')
+        )
+    );
+}
+add_action('init', 'register_cp_competition');
+
+//-------------------------Register Custom Post Music----------------------------
+function register_cp_music()
+{
+    register_post_type(
+        'music_post',
+        array(
+            'labels'    => array(
+                'name'          => __('Musicians'),
+                'singular_name' => __('Musician')
+            ),
+            'public'        => true,
+            'has_archive'   => true,
+            'rewrite'       => array('slug' => 'music-post'),
+            'menu_position'      => 20,
+            'menu_icon'      => 'dashicons-format-audio',
+            //set the post to available via the REST API 
+            'show_in_rest'  => true,
+            //enable block-editor / gutenberg in CP
+            'supports'      => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments')
+        )
+    );
+}
+add_action('init', 'register_cp_music');
+
+//Register a Custom Taxonomy Category for Music
+function register_category_music_taxonomy()
+{
+    $args = array(
+        'hierarchical' => true,
+        'label' => 'Categories',
+        'show_in_rest' => true,
+        'show_admin_column' => true,
+        //Added too call loop
+        'rewrite'       => array('slug' => 'music'),
+        //disable the option to add, edit or delete the categories
+        'capabilities' => [
+            'manage_terms' => 'manage_category_music',
+            'edit_terms' => 'manage_category_music',
+            'delete_terms' => 'manage_category_music',
+            'assign_terms' => 'edit_posts'
+        ],
+    );
+    register_taxonomy('category_music', array('music_post'), $args);
+}
+add_action('init', 'register_category_music_taxonomy');
+
+//Register Taxonomy Terms 
+function register_category_music_terms()
+{
+    //TASK- TO BE UPDATED TO ARTISTS FOR LIVE SITE
+    wp_insert_term('Artists', 'category_music', $args = array(
+        'description' => 'New Music we like'
+    ));
+    wp_insert_term('Featured Artist', 'category_music', $args = array(
+        'description' => 'Featured Artists of the month'
+    ));
+    wp_insert_term('Event', 'category_music', $args = array(
+        'description' => 'Music Events the month'
+    ));
+}
+add_action('init', 'register_category_music_terms');
+
+//-----------------------------------Register Custom Post News------------------------
+function register_cp_news()
+{
+    register_post_type(
+        'news',
+        array(
+            'labels'    => array(
+                'name'          => __('News'),
+                'singular_name' => __('News')
+            ),
+            'public'        => true,
+            'has_archive'   => true,
+            'rewrite'       => array('slug' => 'latest-news'),
+            'menu_position'      => 20,
+            'menu_icon'      => 'dashicons-admin-site-alt2',
+            //set the post to available via the REST API 
+            'show_in_rest'  => true,
+            //enable block-editor / gutenberg in CP
+            'supports'      => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments')
+        )
+    );
+}
+add_action('init', 'register_cp_news');
+
+//Register a Custom Taxonomy Category for News
+function register_category_news_taxonomy()
+{
+    $args = array(
+        'hierarchical' => true,
+        'label' => 'Categories',
+        'show_admin_column' => true,
+        'show_in_rest' => true,
+        //disable the option to add, edit or delete the categories
+        'capabilities' => [
+            'manage_terms' => 'manage_category_news',
+            'edit_terms' => 'manage_category_news',
+            'delete_terms' => 'manage_category_news',
+            'assign_terms' => 'edit_posts'
+        ],
+    );
+    register_taxonomy('category_news', array('news'), $args);
+}
+add_action('init', 'register_category_news_taxonomy');
+
+//Register Taxonomy Terms 
+function register_category_news_terms()
+{
+    wp_insert_term('Politics', 'category_news', $args = array(
+        'description' => 'Let\'s talk about Politic'
+    ));
+    wp_insert_term('Sport', 'category_news', $args = array(
+        'description' => 'Let\'s talk about Sport'
+    ));
+    wp_insert_term('Cinema', 'category_news', $args = array(
+        'description' => 'Let\'s talk about Cinema'
+    ));
+    wp_insert_term('Music News', 'category_news', $args = array(
+        'description' => 'Let\'s talk about Music'
+    ));
+    wp_insert_term('Events', 'category_news', $args = array(
+        'description' => 'Your Breaking News on a silver plate!'
+    ));
+    wp_insert_term('Breaking News', 'category_news', $args = array(
+        'description' => 'Your Breaking News on a silver plate!'
+    ));
+    wp_insert_term('Old Posts', 'category_news', $args = array(
+        'description' => 'Posts from previous Wordpress website'
+    ));
+}
+add_action('init', 'register_category_news_terms');
+
+
+function register_cp_presenter()
+{
+    register_post_type(
+        'presenter',
+        array(
+            'labels'    => array(
+                'name'          => __('Presenters'),
+                'singular_name' => __('Presenter')
+            ),
+            'public'        => true,
+            'has_archive'   => true,
+            'rewrite'       => array('slug' => 'presenter'),
+            'menu_position'      => 20,
+            'menu_icon'      => 'dashicons-universal-access-alt',
+            //set the post to available via the REST API 
+            'show_in_rest'  => true,
+            //enable block-editor / gutenberg in CP
+            'supports'      => array('title', 'editor', 'author', 'thumbnail', 'comments')
+        )
+    );
+}
+add_action('init', 'register_cp_presenter');
+
+//-------------------------Register Custom Post Schedule----------------------------
+function register_cp_schedule()
+{
+    register_post_type(
+        'schedule',
+        array(
+            'labels'    => array(
+                'name'          => __('Schedule'),
+                'singular_name' => __('Schedule')
+            ),
+            'public'        => true,
+            'has_archive'   => true,
+            'rewrite'       => array('slug' => 'schedule'),
+            'menu_position'      => 20,
+            'menu_icon'      => 'dashicons-calendar',
+            //set the post to available via the REST API 
+            'show_in_rest'  => true,
+            //enable block-editor / gutenberg in CP
+            'supports'      => array('title', 'editor', 'author', 'thumbnail', 'comments')
+        )
+    );
+}
+add_action('init', 'register_cp_schedule');
+
+//Register a Custom Taxonomy Shows for Schedule
+function register_category_schedule_taxonomy()
+{
+    $args = array(
+        'hierarchical' => true,
+        'label' => 'Shows',
+        'show_admin_column' => true,
+        'show_in_rest' => true,
+        //disable the option to add, edit or delete the categories
+        'capabilities' => [
+            'manage_terms' => 'manage_category_schedule',
+            'edit_terms' => 'manage_category_schedule',
+            'delete_terms' => 'manage_category_schedule',
+            'assign_terms' => 'edit_posts'
+        ],
+    );
+    register_taxonomy('category_schedule', 'schedule', $args);
+}
+add_action('init', 'register_category_schedule_taxonomy');
+
+
+//Register Taxonomy Terms 
+function register_category_schedule_terms()
+{
+    wp_insert_term('Big Breakfast', 'category_schedule', $args = array(
+        'description' => 'BOOM’s Big Breakfast Show',
+    ));
+    wp_insert_term('The Drive Home', 'category_schedule', $args = array(
+        'description' => 'The Drive Home Show'
+    ));
+    wp_insert_term('Speciality Shows', 'category_schedule', $args = array(
+        'description' => 'Speciality Shows',
+    ));
+}
+add_action('init', 'register_category_schedule_terms');
+
+
+//-----------------Register Custom Post type Sponsor---------------------
+function register_cp_sponsor()
+{
+    register_post_type(
+        'sponsors',
+        array(
+            'labels'    => array(
+                'name'          => __('Sponsors'),
+                'singular_name' => __('Sponsor')
+            ),
+            'public'        => true,
+            'has_archive'   => true,
+            'rewrite'       => array('slug' => 'sponsors'),
+            'menu_position'      => 20,
+            'menu_icon'      => 'dashicons-groups',
+            //set the post to available via the REST API 
+            'show_in_rest'  => true,
+            //enable block-editor / gutenberg in CP
+            'supports'      => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments')
+        )
+    );
+}
+add_action('init', 'register_cp_sponsor');
+
+//-------------------Register Custom post type for Contact-----------------
+function register_cp_contact()
+{
+    register_post_type(
+        'contact_details',
+        array(
+            'labels'    => array(
+                'name'          => __('Contact Details'),
+                'singular_name' => __('Contact Details')
+            ),
+            'public'        => true,
+            'has_archive'   => true,
+            'rewrite'       => array('slug' => 'contact-details'),
+            'menu_position'      => 20,
+            'menu_icon'      => 'dashicons-location-alt',
+            //set the post to available via the REST API 
+            'show_in_rest'  => true,
+            //enable block-editor / gutenberg in CP
+            'supports'      => array('title', 'editor', 'author', 'content', 'thumbnail', 'excerpt', 'comments')
+        )
+    );
+}
+add_action('init', 'register_cp_contact');
+
+//Register a Custom Taxonomy Category for Music
+function register_category_contact_taxonomy()
+{
+    $args = array(
+        'hierarchical' => true,
+        'label' => 'Contact Details',
+        'show_in_rest' => true,
+        'show_admin_column' => true,
+        //Added too call loop
+        'rewrite'       => array('slug' => 'contact-details'),
+        //disable the option to add, edit or delete the categories
+        'capabilities' => [
+            'manage_terms' => 'manage_category_contact',
+            'edit_terms' => 'manage_category_contact',
+            'delete_terms' => 'manage_category_contact',
+            'assign_terms' => 'edit_posts'
+        ],
+    );
+    register_taxonomy('category_contact', array('contact_details'), $args);
+}
+add_action('init', 'register_category_contact_taxonomy');
+
+//Register Taxonomy Terms 
+function register_category_contact_terms()
+{
+    //TASK- TO BE UPDATED TO ARTISTS FOR LIVE SITE
+    wp_insert_term('Address', 'category_contact', $args = array(
+        'description' => 'Boom Address'
+    ));
+    wp_insert_term('Postal', 'category_contact', $args = array(
+        'description' => 'Boom Postal Address'
+    ));
+    wp_insert_term('Management', 'category_contact', $args = array(
+        'description' => 'Boom Management Team'
+    ));
+    wp_insert_term('Phone', 'category_contact', $args = array(
+        'description' => 'Boom Phone Number'
+    ));
+}
+add_action('init', 'register_category_contact_terms');
