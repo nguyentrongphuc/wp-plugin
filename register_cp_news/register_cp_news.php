@@ -55,13 +55,13 @@ add_action('init', 'register_category_news_taxonomy');
 //Register Taxonomy Terms 
 function register_category_news_terms()
 {
-    wp_insert_term('Politics', 'category_news', $args = array(
-        'description' => 'Let\'s talk about Politic'
+    wp_insert_term('Entertainment', 'category_news', $args = array(
+        'description' => 'Let\'s get entertain'
     ));
     wp_insert_term('Sport', 'category_news', $args = array(
         'description' => 'Let\'s talk about Sport'
     ));
-    wp_insert_term('Cinema', 'category_news', $args = array(
+    wp_insert_term('Movie', 'category_news', $args = array(
         'description' => 'Let\'s talk about Cinema'
     ));
     wp_insert_term('Music News', 'category_news', $args = array(
