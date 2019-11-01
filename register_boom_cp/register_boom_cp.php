@@ -90,7 +90,7 @@ if (!function_exists('register_category_music_taxonomy')) {
     {
         $args = array(
             'hierarchical' => true,
-            'label' => 'Categories',
+            'label' => 'Music Posts',
             'show_in_rest' => true,
             'show_admin_column' => true,
             //Added too call loop
@@ -158,7 +158,7 @@ if (!function_exists('register_category_news_taxonomy')) {
     {
         $args = array(
             'hierarchical' => true,
-            'label' => 'Categories',
+            'label' => 'News Archive',
             'show_admin_column' => true,
             'show_in_rest' => true,
             //disable the option to add, edit or delete the categories
@@ -261,7 +261,7 @@ if (!function_exists('register_category_schedule_taxonomy')) {
     {
         $args = array(
             'hierarchical' => true,
-            'label' => 'Shows',
+            'label' => 'Show Categories',
             'show_admin_column' => true,
             'show_in_rest' => true,
             //disable the option to add, edit or delete the categories
