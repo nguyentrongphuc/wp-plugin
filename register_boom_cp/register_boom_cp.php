@@ -2,9 +2,9 @@
 /*
 Plugin Name: Register Boom Custom Posts
 Plugin URI:
-Description: Register a Custom Post Types (for BOOM site)
+Description: Register a Custom Post Types - About, Competitions
 Version: 1.0
-Author: Alex/John/Fanny
+Author: Fanny/John/Alex
 Author URI:
 Licence: none
 */
@@ -16,7 +16,7 @@ function register_cp_about()
         'about',
         array(
             'labels'    => array(
-                'name'          => __('About BOOM')
+                'name'          => esc_html_x('About BOOM', 'boom_radio')
             ),
             'public'        => true,
             'has_archive'   => true,
@@ -30,15 +30,15 @@ function register_cp_about()
 }
 add_action('init', 'register_cp_about');
 
-
+//------------------Register Custom Post type for Competitions--------------------------
 function register_cp_competition()
 {
     register_post_type(
         'competition',
         array(
             'labels'    => array(
-                'name'          => __('Competitions'),
-                'singular_name' => __('Competition')
+                'name'          => esc_html_x('Competitions', 'boom_radio'),
+                'singular_name' => esc_html_x('Competition', 'boom_radio')
             ),
             'public'        => true,
             'has_archive'   => true,
@@ -61,8 +61,8 @@ function register_cp_music()
         'music_post',
         array(
             'labels'    => array(
-                'name'          => __('Musicians'),
-                'singular_name' => __('Musician')
+                'name'          => esc_html_x('Musicians', 'boom_radio'),
+                'singular_name' => esc_html_x('Musician', 'boom_radio'),
             ),
             'public'        => true,
             'has_archive'   => true,
@@ -103,7 +103,7 @@ add_action('init', 'register_category_music_taxonomy');
 //Register Taxonomy Terms 
 function register_category_music_terms()
 {
-    //TASK- TO BE UPDATED TO ARTISTS FOR LIVE SITE
+    //Sets taxonmoy for each of the four area in the contact page
     wp_insert_term('Artists', 'category_music', $args = array(
         'description' => 'New Music we like'
     ));
@@ -123,8 +123,8 @@ function register_cp_news()
         'news',
         array(
             'labels'    => array(
-                'name'          => __('News'),
-                'singular_name' => __('News')
+                'name'          => esc_html_x('News', 'boom_radio'),
+                'singular_name' => esc_html_x('News', 'boom_radio'),
             ),
             'public'        => true,
             'has_archive'   => true,
@@ -187,15 +187,15 @@ function register_category_news_terms()
 }
 add_action('init', 'register_category_news_terms');
 
-
+//-----------------------------------Register Custom Post Presenter------------------------
 function register_cp_presenter()
 {
     register_post_type(
         'presenter',
         array(
             'labels'    => array(
-                'name'          => __('Presenters'),
-                'singular_name' => __('Presenter')
+                'name'          => esc_html_x('Presenters', 'boom_radio'),
+                'singular_name' => esc_html_x('Presenter', 'boom_radio')
             ),
             'public'        => true,
             'has_archive'   => true,
@@ -218,8 +218,8 @@ function register_cp_schedule()
         'schedule',
         array(
             'labels'    => array(
-                'name'          => __('Schedule'),
-                'singular_name' => __('Schedule')
+                'name'          => esc_html_x('Schedule', 'boom_radio'),
+                'singular_name' => esc_html_x('Schedule', 'boom_radio')
             ),
             'public'        => true,
             'has_archive'   => true,
@@ -279,8 +279,8 @@ function register_cp_sponsor()
         'sponsors',
         array(
             'labels'    => array(
-                'name'          => __('Sponsors'),
-                'singular_name' => __('Sponsor')
+                'name'          => esc_html_x('Sponsors', 'boom_radio'),
+                'singular_name' => esc_html_x('Sponsor', 'boom_radio')
             ),
             'public'        => true,
             'has_archive'   => true,
@@ -303,8 +303,8 @@ function register_cp_contact()
         'contact_details',
         array(
             'labels'    => array(
-                'name'          => __('Contact Details'),
-                'singular_name' => __('Contact Details')
+                'name'          => esc_html_x('Contact Details', 'boom_radio'),
+                'singular_name' => esc_html_x('Contact Details', 'boom_radio')
             ),
             'public'        => true,
             'has_archive'   => true,
@@ -320,7 +320,7 @@ function register_cp_contact()
 }
 add_action('init', 'register_cp_contact');
 
-//Register a Custom Taxonomy Category for Music
+//Register a Custom Taxonomy Category for Contact
 function register_category_contact_taxonomy()
 {
     $args = array(
@@ -345,7 +345,7 @@ add_action('init', 'register_category_contact_taxonomy');
 //Register Taxonomy Terms 
 function register_category_contact_terms()
 {
-    //TASK- TO BE UPDATED TO ARTISTS FOR LIVE SITE
+    //Sets taxonmoy for each of the four area in the contact page
     wp_insert_term('Address', 'category_contact', $args = array(
         'description' => 'Boom Address'
     ));
