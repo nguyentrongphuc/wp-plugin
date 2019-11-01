@@ -15,8 +15,8 @@ function register_cp_news()
         'news',
         array(
             'labels'    => array(
-                'name'          => __('News'),
-                'singular_name' => __('News')
+                'name'          => esc_html_x('News', 'boom_radio'),
+                'singular_name' => esc_html_x('News', 'boom_radio')
             ),
             'public'        => true,
             'has_archive'   => true,
