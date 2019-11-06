@@ -119,9 +119,9 @@ if (!function_exists('register_category_music_terms')) {
         wp_insert_term('Featured Artist', 'category_music', $args = array(
             'description' => 'Featured Artists of the month'
         ));
-        wp_insert_term('Event', 'category_music', $args = array(
-            'description' => 'Music Events the month'
-        ));
+        //wp_insert_term('Event', 'category_music', $args = array(
+        //  'description' => 'Music Events the month'
+        //));
     }
 }
 add_action('init', 'register_category_music_terms');
