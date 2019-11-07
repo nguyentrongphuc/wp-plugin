@@ -5781,6 +5781,10 @@ jQuery(function($) {
 			}
 		}
 		
+		// NB: Support plain permalinks
+		if(WPGMZA.RestAPI.URL.match(/\?/))
+			route = route.replace(/\?/, "&");
+		
 		return $.ajax(WPGMZA.RestAPI.URL + route, params);
 	}
 	
@@ -11010,7 +11014,7 @@ jQuery(function($) {
 				map.removeMarker(marker);
 		});
 		
-		WPGMZA.restAPI.call("/markers/?skip_cache=1", {
+		WPGMZA.restAPI.call("/markers/", {
 			method: "DELETE",
 			data: {
 				ids: ids

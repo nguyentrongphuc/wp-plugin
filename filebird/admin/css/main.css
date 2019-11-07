@@ -459,10 +459,7 @@ body.njt-draging .filebird_tree .menu-item:hover {
   word-wrap: break-word;
   white-space: pre-line;
 }
-.btn-text {
-  background: none !important;
-  color: #a1a1a1 !important;
-}
+
 
 /* OVERLAY ADMIN BAR */
 .njt-fb-margin-top{

@@ -218,7 +218,6 @@ class FileBird
                 $attachment_terms = wp_dropdown_categories($dropdown_options);
                 $attachment_terms = preg_replace(array("/<select([^>]*)>/", "/<\/select>/"), "", $attachment_terms);
                 $all_count = wp_count_posts('attachment')->inherit;
-                $uncatetory_count = FileBird_Topbar::get_uncategories_attachment();
 
                 echo '<script type="text/javascript">';
                 echo '/* <![CDATA[ */';

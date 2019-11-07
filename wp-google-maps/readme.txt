@@ -221,6 +221,11 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 == Changelog ==
 
 /*
+= 8.0.8 :- 2019-11-04 :- Medium priority =
+* Fixed AJAX fallback routes not registered for GET only REST routes
+* Fixed some REST API routes 404ing with plain permalinks when route URL + is replaced with space
+* Fixed ?skip_cache=1 breaking plain permalink REST URLs by detecting when query variables are in use
+
 = 8.0.7 :- 2019-10-25 :- Medium priority =
 * Tested up to WordPress 5.3
 * Localized all remote images
@@ -1337,6 +1342,12 @@ Please upgrade your version of WP Google Maps to version 6.0.27 as it includes m
 
 
 For more, please view the WP Google Maps site
+
+
+
+
+
+
 
 
 

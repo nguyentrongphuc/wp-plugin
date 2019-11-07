@@ -274,6 +274,10 @@ jQuery(function($) {
 			}
 		}
 		
+		// NB: Support plain permalinks
+		if(WPGMZA.RestAPI.URL.match(/\?/))
+			route = route.replace(/\?/, "&");
+		
 		return $.ajax(WPGMZA.RestAPI.URL + route, params);
 	}
 	

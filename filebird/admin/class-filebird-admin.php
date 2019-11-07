@@ -119,8 +119,9 @@ class FileBird_Admin
             $folder = sanitize_text_field($_GET['njt_filebird_folder']);
             if (!empty($folder) != '') {
                 $folder = (int) $folder;
+                $term_taxonomy_id = get_term($folder)->term_taxonomy_id;
                 if ($folder > 0) {
-                    $clauses['where'] .= ' AND (' . $wpdb->prefix . 'term_relationships.term_taxonomy_id = ' . $folder . ')';
+                    $clauses['where'] .= ' AND (' . $wpdb->prefix . 'term_relationships.term_taxonomy_id = ' . $term_taxonomy_id . ')';
                     $clauses['join'] .= ' LEFT JOIN ' . $wpdb->prefix . 'term_relationships ON (' . $wpdb->prefix . 'posts.ID = ' . $wpdb->prefix . 'term_relationships.object_id)';
                 } else {
                     //to improve performance: set default folder for files when addnew
@@ -397,7 +398,7 @@ class FileBird_Admin
         }
     }
 
-    private function build_folder($folders)
+    public function build_folder($folders, $return_obj = false)
     {
         // print_r($folders);die;
         //sort
@@ -408,23 +409,31 @@ class FileBird_Admin
         }
         array_multisort($orders, SORT_ASC, $folders);
         //end sort
-        echo '<form action="javascript:void(0);" id="update-folders" enctype="multipart/form-data" method="POST"><ul id="folders-to-edit" class="menu">';
-        foreach ($folders as $k => $v) {$depth = $this->find_depth($v, $folders);?>
-	        <li id="menu-item-<?php echo esc_attr($v->term_id); ?>" data-id="<?php echo esc_attr($v->term_id); ?>" <?php echo $this->filebird_folder_counter($v->count, $v->term_id); ?> class="menu-item menu-item-depth-<?php echo esc_attr($depth); ?>">
-	        	<i class="dh-tree-icon"></i>
-	            <div class="menu-item-bar jstree-anchor">
-	                <div class="menu-item-handle">
+        if(!$return_obj) {
+            echo '<form action="javascript:void(0);" id="update-folders" enctype="multipart/form-data" method="POST"><ul id="folders-to-edit" class="menu">';
+            foreach ($folders as $k => $v) {$depth = $this->find_depth($v, $folders);?>
+                <li id="menu-item-<?php echo esc_attr($v->term_id); ?>" data-id="<?php echo esc_attr($v->term_id); ?>" <?php echo $this->filebird_folder_counter($v->count, $v->term_id); ?> class="menu-item menu-item-depth-<?php echo esc_attr($depth); ?>">
+                    <i class="dh-tree-icon"></i>
+                    <div class="menu-item-bar jstree-anchor">
+                        <div class="menu-item-handle">
 
-	                    <span class="item-title "><span class="menu-item-title"><?php echo esc_html($v->name); ?></span>
-	                </div>
-	            </div>
-	            <ul class="menu-item-transport"></ul>
-	            <input class="menu-item-data-db-id" type="hidden" name="menu-item-db-id[<?php echo esc_attr($v->term_id); ?>]" value="<?php echo esc_attr($v->term_id); ?>">
-	            <input class="menu-item-data-parent-id" type="hidden" name="menu-item-parent-id[<?php echo esc_attr($v->term_id); ?>]" value="<?php echo esc_attr($v->parent); ?>" />
-	        </li>
-	        <?php
-}
-        echo '</ul></form>';
+                            <span class="item-title "><span class="menu-item-title"><?php echo esc_html($v->name); ?></span>
+                        </div>
+                    </div>
+                    <ul class="menu-item-transport"></ul>
+                    <input class="menu-item-data-db-id" type="hidden" name="menu-item-db-id[<?php echo esc_attr($v->term_id); ?>]" value="<?php echo esc_attr($v->term_id); ?>">
+                    <input class="menu-item-data-parent-id" type="hidden" name="menu-item-parent-id[<?php echo esc_attr($v->term_id); ?>]" value="<?php echo esc_attr($v->parent); ?>" />
+                </li>
+                <?php
+            }
+            echo '</ul></form>';
+        } else {
+            foreach ($folders as $k => $v) {
+                $depth = $this->find_depth($v, $folders);
+                $folders[$k]->name = str_repeat('-', $depth) . $folders[$k]->name;
+            }
+            return $folders;
+        }
     }
 
     public function filebird_folder_counter($term_count, $term_id = null)

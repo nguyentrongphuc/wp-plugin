@@ -25,7 +25,11 @@ if (!function_exists('register_cp_about')) {
                 'menu_position'      => 20,
                 'menu_icon'      => 'dashicons-info', //set the post icon to the "i" info via the REST API
                 'show_in_rest'  => true, //if you want to enable the Gutemberg editor this needs to be set as true
-                'supports'      => array('title', 'editor', 'author', 'thumbnail') //enable block-editor / gutenberg in CP
+                'supports'      => array('title', 'editor', 'author', 'thumbnail'),//enable block-editor / gutenberg in CP
+                // //Removes support for the "Add New" buttons and links.
+                // 'capabilities'    => array(
+                //     'create_posts' => 'do_not_allow',
+                // ),
             )
         );
     }
@@ -338,6 +342,10 @@ if (!function_exists('register_cp_contact')) {
                 'rewrite'       => array('slug' => 'contact-details'),
                 'menu_position'      => 20,
                 'menu_icon'      => 'dashicons-location-alt',
+                // //Removes support for the "Add New" buttons and links.
+                // 'capabilities'    => array(
+                //     'create_posts' => 'do_not_allow',
+                // ),
                 //set the post to available via the REST API 
                 'show_in_rest'  => true,
                 //enable block-editor / gutenberg in CP

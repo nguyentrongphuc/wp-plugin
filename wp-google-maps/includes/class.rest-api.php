@@ -14,7 +14,7 @@ class RestAPI extends Factory
 	 * @const The plugins REST API namespace
 	 */
 	const NS = 'wpgmza/v1';
-	const CUSTOM_BASE64_REGEX = '/base64[A-Za-z0-9+\-]+(={0,3})?(\/[A-Za-z0-9+\-]+(={0,3})?)?/';
+	const CUSTOM_BASE64_REGEX = '/base64[A-Za-z0-9+\- ]+(={0,3})?(\/[A-Za-z0-9+\- ]+(={0,3})?)?/';
 	
 	private $fallbackRoutesByRegex;
 	private $nonceTable;
@@ -109,7 +109,10 @@ class RestAPI extends Factory
 		if(!defined('REST_REQUEST'))
 		{
 			if($methodIsOnlyGET)
+			{
+				$this->fallbackRoutesByRegex["#$route#"] = $args;
 				return;	// No need to add nonces for GET requests to the nonce table
+			}
 			
 			$this->addRestNonce($route);
 			

@@ -3,7 +3,7 @@
 Plugin Name: WP Google Maps
 Plugin URI: https://www.wpgmaps.com
 Description: The easiest to use Google Maps plugin! Create custom Google Maps with high quality markers containing locations, descriptions, images and links. Add your customized map to your WordPress posts and/or pages quickly and easily with the supplied shortcode. No fuss.
-Version: 8.0.7
+Version: 8.0.8
 Author: WP Google Maps
 Author URI: https://www.wpgmaps.com
 Text Domain: wp-google-maps
@@ -11,6 +11,11 @@ Domain Path: /languages
 */
 
 /*
+ * 8.0.8 :- 2019-11-04 :- Medium priority
+ * Fixed AJAX fallback routes not registered for GET only REST routes
+ * Fixed some REST API routes 404ing with plain permalinks when route URL + is replaced with space
+ * Fixed ?skip_cache=1 breaking plain permalink REST URLs by detecting when query variables are in use
+ *
  * 8.0.7 :- 2019-10-25 :- Medium priority
  * Tested up to WordPress 5.3
  * Localized all remote images

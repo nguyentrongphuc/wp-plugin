@@ -114,7 +114,7 @@ jQuery(function($) {
 				map.removeMarker(marker);
 		});
 		
-		WPGMZA.restAPI.call("/markers/?skip_cache=1", {
+		WPGMZA.restAPI.call("/markers/", {
 			method: "DELETE",
 			data: {
 				ids: ids

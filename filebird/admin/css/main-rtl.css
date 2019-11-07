@@ -423,10 +423,6 @@ body.njt-draging .filebird_tree .menu-item:hover {
   word-wrap: break-word;
   white-space: pre-line;
 }
-.btn-text {
-  background: none !important;
-  color: #a1a1a1 !important;
-}
 
 .filebird_sidebar #folders-to-edit .menu-item-handle .item-title {
   margin-left: 0 !important;

@@ -100,16 +100,17 @@ MYMAP.init = function (selector, latLng, zoom)
 	google.maps.event.addListener(this.map, 'click', addPoint);
 	
 }
-function addPoint(event) {
 
+function addPoint(event)
+{
 	poly_path.insertAt(poly_path.length, event.latLng);
 
 	var poly_marker = new google.maps.Marker({
-			position: event.latLng,
-			map: MYMAP.map,
-			icon: WPGMZA.defaultMarkerIcon,
-			draggable: true
-		});
+		position: event.latLng,
+		map: MYMAP.map,
+		icon: WPGMZA.defaultMarkerIcon,
+		draggable: true
+	});
 
 	poly_markers.push(poly_marker);
 	poly_marker.setTitle("#" + poly_path.length);

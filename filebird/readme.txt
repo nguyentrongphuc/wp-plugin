@@ -2,7 +2,7 @@
 Contributors: ninjateam
 Tags: wordpress media library folders, wp media folder, wordpress media folder, wordpress media folders, wordpress media library, wordpress media library plugin, wordpress file manager, wordpress media manager
 Requires at least: 3.0
-Tested up to: 5.2.2
+Tested up to: 5.2.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -119,6 +119,15 @@ If you have a large files and want to use more than 10 folders/categories, you c
 4. Bulk selectto move / delete files
 
 == Changelog ==
+
+= 2.5.1 =
+- Improved: Remove unuse CSS
+- Fixed: Elementor
+- Fixed: List view don't load images
+- Fixed: ACF plugin CSS conflict
+- Fixed: Remove trigger which conflict with Divi builder
+- Fixed: Conflict with Gridd Theme
+- Fixed: Count uncategories items
 
 = 2.5 =
 - Added: Option turn on/off load FileBird JS at front-end for page builders
