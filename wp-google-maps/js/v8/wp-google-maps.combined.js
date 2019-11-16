@@ -167,7 +167,7 @@ jQuery(function($) {
 		 */
 		hexOpacityToRGBA: function(colour, opacity)
 		{
-			hex = parseInt(colour.replace(/^#/, ""), 16);
+			var hex = parseInt(colour.replace(/^#/, ""), 16);
 			return [
 				(hex & 0xFF0000) >> 16,
 				(hex & 0xFF00) >> 8,
@@ -405,6 +405,9 @@ jQuery(function($) {
 			var trigger = "userlocationfound";
 			var nativeFunction = "getCurrentPosition";
 			
+			if(WPGMZA.userLocationDenied)
+				return; // NB: The user has declined to share location. Only ask once per session.
+			
 			if(watch)
 			{
 				trigger = "userlocationupdated";
@@ -424,6 +427,12 @@ jQuery(function($) {
 				enableHighAccuracy: true
 			};
 			
+			if(!navigator.geolocation[nativeFunction])
+			{
+				console.warn(nativeFunction + " is not available");
+				return;
+			}
+			
 			navigator.geolocation[nativeFunction](function(position) {
 				if(callback)
 					callback(position);
@@ -442,6 +451,9 @@ jQuery(function($) {
 				},
 				function(err) {
 					console.warn(err.code, err.message);
+					
+					if(err.code == 1)
+						WPGMZA.userLocationDenied = true;
 					
 					if(error)
 						error(err);
@@ -1185,8 +1197,15 @@ jQuery(function($) {
 			
 			var docIDDelta = (docID - lastDocID - 1);
 			
+			if(!$.isNumeric(docID))
+				throw new Error("Value is not numeric");
+			
+			// NB: Force docID to an integer in case it's a string
+			docID = parseInt(docID);
+			
 			if(prev !== null && docID <= prev)
 				throw new Error("Elias Fano encoding can only be used on a sorted, ascending list of unique integers.");
+			
 			prev = docID;
 			
 			buffer1 <<= lowBitsLength;
@@ -3349,6 +3368,7 @@ jQuery(function($) {
 		this.polygons = [];
 		this.polylines = [];
 		this.circles = [];
+		this.rectangles = [];
 		
 		this.loadSettings(options);
 		
@@ -8795,7 +8815,7 @@ jQuery(function($) {
 		
 		if(this.opacity)
 			params.fill = new ol.style.Fill({
-				color: WPGMZA.hexOpacityToRGBA(this.color, this.opacity)
+				color: WPGMZA.hexOpacityToRGBA(this.fillColor, this.opacity)
 			});
 			
 		return params;

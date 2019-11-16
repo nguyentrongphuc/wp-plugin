@@ -1424,21 +1424,21 @@ body[class*="wp-google-maps"] input[type="text"].wpgmza_copy_shortcode {
 
 input[type="radio"]
 {
-     -webkit-appearance: none;
-     -moz-appearance: none;
-     appearance: none;
-     display: inline-block;
-     position: relative;
-     background-color: #fff;
-     color: #333;
-     height: 15px;
-     width: 15px;
-     border: 0;
-     border-radius: 50%;
-     cursor: pointer;     
-     margin-right: 7px;
-     outline: none;
-  border: 1px solid #2B323C;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	display: inline-block;
+	position: relative;
+	background-color: #fff;
+	color: #333;
+	height: 15px;
+	width: 15px;
+	border: 0;
+	border-radius: 50%;
+	cursor: pointer;     
+	margin-right: 7px;
+	outline: none;
+	border: 1px solid #2B323C;
 }
 input[type="radio"]:checked::before
 {
@@ -1811,13 +1811,13 @@ input[type="text"] {
 
 input[type="number"],
 input[type="date"],
-input:not([type="checkbox"]){
-  border: 1px solid #ddd;
-  box-shadow: none;
-  padding: 4px 9px;
-  border-radius: 2px;
-  transition: border-color .12s ease-in-out;
-  background: #fff;
+input:not([type="checkbox"]):not([type="radio"]){
+	border: 1px solid #ddd;
+	box-shadow: none;
+	padding: 4px 9px;
+	border-radius: 2px;
+	transition: border-color .12s ease-in-out;
+	background: #fff;
 }
 input[type="number"]:hover,
 input[type="number"]:active,

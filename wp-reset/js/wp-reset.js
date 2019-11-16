@@ -8,6 +8,9 @@ jQuery(document).ready(function($) {
   // init tabs
   $('#wp-reset-tabs')
     .tabs({
+      create: function() {
+        $('#loading-tabs').remove();
+      },
       activate: function(event, ui) {
         localStorage.setItem('wp-reset-tabs', $('#wp-reset-tabs').tabs('option', 'active'));
       },
@@ -27,8 +30,47 @@ jQuery(document).ready(function($) {
       $.scrollTo('#' + target, 500, { offset: { top: -50, left: 0 } });
     }
 
+    $(this).blur();
     return false;
   }); // jump to tab/anchor helper
+
+  // helper for scrolling to anchor
+  $('.tools_page_wp-reset').on('click', '.scrollto', function(e) {
+    e.preventDefault();
+
+    // get the link anchor and scroll to it
+    target = this.href.split('#')[1];
+    if (target) {
+      $.scrollTo('#' + target, 500, { offset: { top: -50, left: 0 } });
+    }
+
+    $(this).blur();
+    return false;
+  }); // scroll to anchor helper
+
+  // toggle button dropdown menu
+  $('.tools_page_wp-reset').on('click', '.button.dropdown-toggle', function(e) {
+    e.preventDefault();
+
+    parent_dropdown = $(this).parent('.dropdown');
+    sibling_menu = $(this).siblings('.dropdown-menu');
+
+    $('.dropdown')
+      .not(parent_dropdown)
+      .removeClass('show');
+    $('.dropdown-menu')
+      .not(sibling_menu)
+      .removeClass('show');
+
+    $(parent_dropdown).toggleClass('show');
+    $(sibling_menu).toggleClass('show');
+
+    return false;
+  }); // toggle button dropdown menu
+
+  $(document).on('click', ':not(.dropdown-toggle), .dropdown-item', function() {
+    wpr_close_dropdowns();
+  });
 
   // delete transients
   $('.tools_page_wp-reset').on('click', '#delete-transients', 'click', function(e) {
@@ -101,53 +143,6 @@ jQuery(document).ready(function($) {
 
     return false;
   }); // delete htaccess file
-
-  // create&download backup
-  $('.tools_page_wp-reset').on('click', '.download-backup', 'click', function(e) {
-    e.preventDefault();
-    button = this;
-
-    block_ui(wp_reset.creating_backup);
-    $.get({
-      url: ajaxurl,
-      data: {
-        action: 'wp_reset_run_tool',
-        _ajax_nonce: wp_reset.nonce_run_tool,
-        tool: 'download_backup'
-      }
-    })
-      .always(function(data) {
-        swal.close();
-      })
-      .done(function(data) {
-        if (data.success) {
-          $.ajax({
-            type: 'HEAD',
-            url: data.data,
-            success: function() {
-              window.location = data.data;
-            },
-            error: function() {
-              swal({
-                type: 'error',
-                title: wp_reset.backup_not_accessible,
-                html: wp_reset.backup_not_accessible_details.replace('%url%', data.data)
-              });
-            }
-          });
-        } else {
-          swal({
-            type: 'error',
-            title: wp_reset.documented_error + ' ' + data.data
-          });
-        }
-      })
-      .fail(function(data) {
-        swal({ type: 'error', title: wp_reset.undocumented_error });
-      });
-
-    return false;
-  }); // create&download backup
 
   // compare snapshot
   $('#wpr-snapshots').on('click', '.compare-snapshot', 'click', function(e) {
@@ -260,12 +255,14 @@ jQuery(document).ready(function($) {
   $('.tools_page_wp-reset').on('click', '.create-new-snapshot', 'click', function(e) {
     e.preventDefault();
     button = $('#create-new-snapshot-primary');
+    description = $(this).data('description') || '';
 
     swal({
       title: $(button).data('title'),
       type: 'question',
       text: $(button).data('text'),
       input: 'text',
+      inputValue: description,
       inputPlaceholder: $(button).data('placeholder'),
       showCancelButton: true,
       focusConfirm: false,
@@ -328,6 +325,8 @@ jQuery(document).ready(function($) {
   // standard way of running a tool, with confirmation, loading and success message
   function run_tool(button, tool_name, extra_data) {
     var confirm_title = $(button).data('confirm-title') || wp_reset.confirm_title;
+
+    wpr_close_dropdowns();
 
     confirm_action(
       confirm_title,
@@ -473,7 +472,7 @@ jQuery(document).ready(function($) {
   }); // reset submit
 
   // collapse / expand card
-  $('.card').on('click', '.toggle-card', function(e) {
+  $('.tools_page_wp-reset').on('click', '.toggle-card', function(e, skip_anim) {
     e.preventDefault();
 
     card = $(this)
@@ -484,6 +483,16 @@ jQuery(document).ready(function($) {
       .toggleClass('dashicons-arrow-down-alt2');
     $(this).blur();
 
+    if (typeof skip_anim != 'undefined' && skip_anim) {
+      $(card)
+        .find('.card-body')
+        .toggle();
+    } else {
+      $(card)
+        .find('.card-body')
+        .slideToggle(500);
+    }
+
     cards = localStorage.getItem('wp-reset-cards');
     if (cards == null) {
       cards = new Object();
@@ -491,10 +500,12 @@ jQuery(document).ready(function($) {
       cards = JSON.parse(cards);
     }
 
+    card_id = card.attr('id') || $('h4', card).attr('id') || '';
+
     if (card.hasClass('collapsed')) {
-      cards[card.attr('id')] = 'collapsed';
+      cards[card_id] = 'collapsed';
     } else {
-      cards[card.attr('id')] = 'expanded';
+      cards[card_id] = 'expanded';
     }
     localStorage.setItem('wp-reset-cards', JSON.stringify(cards));
 
@@ -508,7 +519,7 @@ jQuery(document).ready(function($) {
   }
   $.each(cards, function(card_name, card_value) {
     if (card_value == 'collapsed') {
-      $('a.toggle-card', '#' + card_name).trigger('click');
+      $('a.toggle-card', '#' + card_name).trigger('click', true);
     }
   });
 
@@ -680,3 +691,8 @@ function wpr_fix_dialog_close(event, ui) {
     jQuery('#' + event.target.id).dialog('close');
   });
 } // wpr_fix_dialog_close
+
+function wpr_close_dropdowns() {
+  jQuery('.dropdown').removeClass('show');
+  jQuery('.dropdown-menu').removeClass('show');
+} // wpr_close_dropdowns

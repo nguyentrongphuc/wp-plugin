@@ -42,7 +42,7 @@
 
 require_once dirname(__FILE__).'/../Abstract.php';
 
-class Diff_Renderer_Html_Array extends Diff_Renderer_Abstract
+class WPR_Diff_Renderer_Html_Array extends WPR_Diff_Renderer_Abstract
 {
 	/**
 	 * @var array Array of the default options that apply to this renderer.

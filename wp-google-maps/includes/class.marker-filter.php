@@ -213,11 +213,13 @@ class MarkerFilter extends Factory
 		$query->fields[] = 'id';
 		
 		$sql = $query->build();
-		$results = $wpdbm->get_results($sql);
+		$ids = $wpdb->get_col($sql);
 		
-		$integratedMarkers = apply_filters('wpgmza_fetch_integrated_markers', array(), $this);
+		$integrated = apply_filters('wpgmza_fetch_integrated_markers', $markers, $this);
+		foreach($integrated as $key => $value)
+			$ids[] = $value->id;
 		
-		return $wpdb->get_col($sql);
+		return $ids;
 	}
 	
 	

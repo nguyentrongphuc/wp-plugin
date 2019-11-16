@@ -426,8 +426,6 @@ class Plugin extends Factory
 	 */
 	public function onLoadTextDomainMOFile($mofile, $domain)
 	{
-		// var_dump($domain);
-		
 		if($domain == 'wp-google-maps')
 			$mofile = plugin_dir_path(__DIR__) . 'languages/wp-google-maps-' . get_locale() . '.mo';
 		

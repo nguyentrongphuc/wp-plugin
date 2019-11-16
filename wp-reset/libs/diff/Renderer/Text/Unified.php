@@ -42,7 +42,7 @@
 
 require_once dirname(__FILE__).'/../Abstract.php';
 
-class Diff_Renderer_Text_Unified extends Diff_Renderer_Abstract
+class WPR_Diff_Renderer_Text_Unified extends WPR_Diff_Renderer_Abstract
 {
 	/**
 	 * Render and return a unified diff.

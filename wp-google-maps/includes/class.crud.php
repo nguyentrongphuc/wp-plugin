@@ -229,20 +229,6 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 				$placeholder = '%f';
 				break;
 				
-			/*case 'geometry':
-			case 'point':
-			case 'linestring':
-			case 'polygon':
-			case 'multipoint':
-			case 'multilinestring':
-			case 'multipolygon':
-			case 'geometrycollection':
-				$placeholders[] = 'NULL';
-				
-				// This can be implemented in a subclass
-				
-				break;*/
-				
 			default:
 				$placeholder = '%s';
 				break;

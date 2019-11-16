@@ -40,7 +40,7 @@
  * @link http://github.com/chrisboulton/php-diff
  */
 
-abstract class Diff_Renderer_Abstract
+abstract class WPR_Diff_Renderer_Abstract
 {
 	/**
 	 * @var object Instance of the diff class that this renderer is generating the rendered diff for.

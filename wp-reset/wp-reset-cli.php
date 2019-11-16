@@ -321,75 +321,12 @@ class WP_Reset_CLI extends WP_CLI_Command
 
 
   /**
-   * Manipulate backups.
-   *
-   * ## OPTIONS
-   *
-   * <create|list>
-   * : Actions to take with backup(s).
-   *
-   * ## EXAMPLES
-   *
-   * $ wp reset backup create
-   * Success: New backup created; /wp-content/wp-reset-backups/wp-reset-backup-site-com-2019-09-25-16-44-37-654a.sql.gz
-   *
-   * $ wp reset backup list
-   * Success: 2 backups found.
-   * ---
-   * -
-   * file: /wp-content/wp-reset-backups/wp-reset-backup-site-com-2019-09-24-15-35-55-6514.sql.gz
-   * -
-   * file: /wp-content/wp-reset-backups/wp-reset-backup-site-com-2019-09-24-15-38-09-45ab.sql.gz
-   *
-   * @when after_wp_load
+   * This command is no longer available. Please use "wp reset snapshots create" instead.
    */
-  function backup($args, $assoc_args)
+  function backups($args, $assoc_args)
   {
-    global $wp_reset;
-
-    if (empty($args[0])) {
-      WP_CLI::error('Please choose a subcommand: create or list.');
-      return;
-    } elseif (false == in_array($args[0], array('create', 'list'))) {
-      WP_CLI::error('Unknown subcommand. Please choose from: create or list.');
-    } else {
-      $subcommand = $args[0];
-    }
-
-    switch ($subcommand) {
-      case 'create':
-        $filename = $wp_reset->do_create_backup(true);
-        if (is_wp_error($filename)) {
-          WP_CLI::error('Unable to create new backup. ' . $filename->get_error_message());
-        } else {
-          WP_CLI::success('New backup created: /wp-content/' . $wp_reset->backups_folder . '/' . $filename);
-        }
-        break;
-      case 'list':
-        $out = array();
-        $files = @scandir(trailingslashit(WP_CONTENT_DIR) . $wp_reset->backups_folder . '/');
-        if (false === $files || !is_array($files)) {
-          WP_CLI::error('Unable to open backups folder.');
-        } else {
-          foreach ($files as $file) {
-            if (substr($file, -3) == '.gz') {
-              $out[] = array('file' => '/wp-content/' . $wp_reset->backups_folder . '/' . $file);
-            }
-          } // foreach
-          if ($out) {
-            WP_CLI::success(sizeof($out) . ' backup' . (sizeof($out) == 1 ? '' : 's') . ' found.');
-            WP_CLI\Utils\format_items('yaml', $out, array('file'));
-          } else {
-            WP_CLI::error('No backups found.');
-          }
-        }
-        break;
-      default:
-        // should never come to this but can't hurt
-        WP_CLI::error('Unknown subcommand. Please choose from: create or list.');
-        return;
-    }
-  } // backup
+    WP_CLI::error('This command is no longer available. Please use: wp reset snapshots create');
+  } // backups
 } // WP_Reset_CLI
 
 WP_CLI::add_command('reset', 'WP_Reset_CLI');

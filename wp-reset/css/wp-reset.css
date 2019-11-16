@@ -17,6 +17,21 @@
   padding: 0;
 }
 
+.tools_page_wp-reset #loading-tabs {
+  padding-top: 80px;
+  text-align: center;
+}
+
+.tools_page_wp-reset #loading-tabs img {
+  width: 100px;
+  height: auto;
+  opacity: 0.4;
+}
+
+.tools_page_wp-reset .mb0 {
+  margin-bottom: 0;
+}
+
 #wpbody-content {
   background: #f9fbfd;
 }
@@ -47,6 +62,7 @@
 #wpfooter {
   padding: 20px;
   border-top: 1px solid #e5e5e5;
+  background-color: #ffffff;
 }
 
 #wpfooter a {
@@ -55,6 +71,74 @@
 
 #wpfooter span {
   color: #ffb900;
+}
+
+.tools_page_wp-reset .dropdown {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.tools_page_wp-reset .button.dropdown-toggle::after {
+  content: '\f140';
+  font-family: dashicons;
+  display: inline-block;
+  line-height: 1;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: inherit;
+  text-transform: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  vertical-align: text-top;
+  text-align: center;
+}
+
+.tools_page_wp-reset .dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.tools_page_wp-reset .dropdown .dropdown-menu.show {
+  display: block;
+}
+
+.tools_page_wp-reset .dropdown-menu .dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1.5rem;
+  clear: both;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.tools_page_wp-reset .dropdown-menu .dropdown-item:focus,
+.tools_page_wp-reset .dropdown-item:hover {
+  color: #16181b;
+  text-decoration: none;
+  background-color: #f8f9fa;
 }
 
 .tools_page_wp-reset #wp_reset_confirm {
@@ -71,6 +155,12 @@
   text-align: center;
 }
 
+.tools_page_wp-reset .half {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+}
+
 .tools_page_wp-reset .button.disabled {
   pointer-events: none;
   cursor: not-allowed;
@@ -82,14 +172,35 @@
   border-radius: 0;
 }
 
+.tools_page_wp-reset .button,
+.tools_page_wp-reset .button-secondary {
+  color: #555;
+  border-color: #ccc;
+  background: #f7f7f7;
+  box-shadow: 0 1px 0 #ccc;
+}
+
+.tools_page_wp-reset .button-secondary:focus, .tools_page_wp-reset .button-secondary:hover, .tools_page_wp-reset .button.focus, .tools_page_wp-reset .button.hover, .tools_page_wp-reset .button:focus, .tools_page_wp-reset .button:hover {
+  background: #fafafa;
+  border-color: #999;
+  color: #23282d;
+}
+
+.tools_page_wp-reset .button:not(.button-primary):hover {
+  background: #f1f1f1;
+}
+.tools_page_wp-reset .button:not(.button-primary) {
+  background: #ffffff;
+}
+
 .tools_page_wp-reset .plain-list {
-  margin-top: 5px;
+  margin-top: 10px;
   list-style-type: circle;
   list-style-position: inside;
 }
 
 .tools_page_wp-reset .plain-list li {
-  text-indent: -18px;
+  text-indent: -20px;
   padding-left: 23px;
   line-height: 23px;
   margin: 0;
@@ -192,17 +303,18 @@
   margin: -5px 0 0 0;
 }
 
-.tools_page_wp-reset .toggle-card {
+.tools_page_wp-reset .card-header-right a:not(.button) {
   text-decoration: none;
   color: #444;
+  margin-left: 5px;
 }
 
-.tools_page_wp-reset .toggle-card:hover {
+.tools_page_wp-reset .card-header-right a:hover:not(.button) {
   color: #00a0d2;
 }
 
 .tools_page_wp-reset .card {
-  padding: 0 25px 15px 25px;
+  padding: 0 25px 20px 25px;
   max-width: 100%;
   width: 100%;
   margin: 0 0 35px 0;
@@ -223,12 +335,6 @@
   padding-bottom: 0;
 }
 
-.tools_page_wp-reset .card.collapsed p,
-.tools_page_wp-reset .card.collapsed b,
-.tools_page_wp-reset .card.collapsed ul {
-  display: none;
-}
-
 .tools_page_wp-reset .card.collapsed h4 {
   border: none;
 }
@@ -246,10 +352,11 @@
 
 .tools_page_wp-reset table td {
   text-align: left;
-  padding: 5px;
+  padding: 20px 10px;
+  border-bottom: thin solid #999;
 }
 
-.tools_page_wp-reset table tr:nth-child(even) td {
+.tools_page_wp-reset table tr:hover td {
   background-color: #f9f9f9;
 }
 
@@ -740,6 +847,7 @@
 }
 /* survey */
 
+/* webhooks dialog */
 .webhooks-dialog .ui-dialog-titlebar {
   background-color: rgb(241, 88, 42);
   color: #fefefe;
@@ -756,7 +864,66 @@
 .webhooks-dialog .plain-list li {
   text-indent: -21px;
 }
+/* webhooks dialog */
 
-#wpfooter {
-  background-color: #ffffff;
+/* Fontello */
+@font-face {
+  font-family: 'fontello';
+  src: url('./font/fontello.eot?91671913');
+  src: url('./font/fontello.eot?91671913#iefix') format('embedded-opentype'),
+    url('./font/fontello.woff2?91671913') format('woff2'), url('./font/fontello.woff?91671913') format('woff'),
+    url('./font/fontello.ttf?91671913') format('truetype'), url('./font/fontello.svg?91671913#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('./font/fontello.svg?91671913#fontello') format('svg');
+  }
+}
+*/
+
+[class^='icon-']:before,
+[class*=' icon-']:before {
+  font-family: 'fontello';
+  font-style: normal;
+  font-weight: normal;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: 0.2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: 0.2em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-doc-text-inv:before {
+  content: '\f15c';
+} /* '' */
+.icon-database:before {
+  content: '\f1c0';
+} /* '' */

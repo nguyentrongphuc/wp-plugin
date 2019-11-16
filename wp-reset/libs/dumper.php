@@ -5,7 +5,7 @@
  * (c) 2create Studio, Bulgaria
  * http://2create.bg/
  */
-abstract class Shuttle_Dump_File {
+abstract class WPR_Shuttle_Dump_File {
 	/**
 	 * File Handle
 	 */
@@ -21,16 +21,16 @@ abstract class Shuttle_Dump_File {
 
 	static function create($filename) {
 		if (self::is_gzip($filename)) {
-			return new Shuttle_Dump_File_Gzip($filename);
+			return new WPR_Shuttle_Dump_File_Gzip($filename);
 		}
-		return new Shuttle_Dump_File_Plaintext($filename);
+		return new WPR_Shuttle_Dump_File_Plaintext($filename);
 	}
 	function __construct($file) {
 		$this->file_location = $file;
 		$this->fh = $this->open();
 
 		if (!$this->fh) {
-			throw new Shuttle_Exception("Couldn't create gz file");
+			throw new WPR_Shuttle_Exception("Couldn't write SQL export file");
 		}
 	}
 
@@ -42,7 +42,7 @@ abstract class Shuttle_Dump_File {
 /**
  * Plain text implementation. Uses standard file functions in PHP.
  */
-class Shuttle_Dump_File_Plaintext extends Shuttle_Dump_File {
+class WPR_Shuttle_Dump_File_Plaintext extends WPR_Shuttle_Dump_File {
 	function open() {
 		return fopen($this->file_location, 'w');
 	}
@@ -57,7 +57,7 @@ class Shuttle_Dump_File_Plaintext extends Shuttle_Dump_File {
 /**
  * Gzip implementation. Uses gz* functions.
  */
-class Shuttle_Dump_File_Gzip extends Shuttle_Dump_File {
+class WPR_Shuttle_Dump_File_Gzip extends WPR_Shuttle_Dump_File {
 	function open() {
 		return gzopen($this->file_location, 'wb9');
 	}
@@ -72,7 +72,7 @@ class Shuttle_Dump_File_Gzip extends Shuttle_Dump_File {
 /**
  * MySQL insert statement builder.
  */
-class Shuttle_Insert_Statement {
+class WPR_Shuttle_Insert_Statement {
 	private $rows = array();
 	private $length = 0;
 	private $table;
@@ -98,7 +98,7 @@ class Shuttle_Insert_Statement {
 		}
 
 		return 'INSERT INTO `' . $this->table . '` VALUES ' .
-			implode(",\n", $this->rows) . '; ';
+			implode(",\n", $this->rows) . ';';
 	}
 
 	function get_length() {
@@ -109,19 +109,19 @@ class Shuttle_Insert_Statement {
 /**
  * Main facade
  */
-abstract class Shuttle_Dumper {
+abstract class WPR_Shuttle_Dumper {
 	/**
 	 * Maximum length of single insert statement
 	 */
 	const INSERT_THRESHOLD = 838860;
 
 	/**
-	 * @var Shuttle_DBConn
+	 * @var WPR_Shuttle_DBConn
 	 */
 	public $db;
 
 	/**
-	 * @var Shuttle_Dump_File
+	 * @var WPR_Shuttle_Dump_File
 	 */
 	public $dump_file;
 
@@ -144,7 +144,7 @@ abstract class Shuttle_Dumper {
 	 * Factory method for dumper on current hosts's configuration.
 	 */
 	static function create($db_options) {
-		$db = Shuttle_DBConn::create($db_options);
+		$db = WPR_Shuttle_DBConn::create($db_options);
 
 		$db->connect();
 
@@ -152,9 +152,9 @@ abstract class Shuttle_Dumper {
 				&& self::is_shell_command_available('mysqldump')
 				&& self::is_shell_command_available('gzip')
 			) {
-			$dumper = new Shuttle_Dumper_ShellCommand($db);
+			$dumper = new WPR_Shuttle_Dumper_ShellCommand($db);
 		} else {
-			$dumper = new Shuttle_Dumper_Native($db);
+			$dumper = new WPR_Shuttle_Dumper_Native($db);
 		}
 
 		if (isset($db_options['include_tables'])) {
@@ -167,7 +167,7 @@ abstract class Shuttle_Dumper {
 		return $dumper;
 	}
 
-	function __construct(Shuttle_DBConn $db) {
+	function __construct(WPR_Shuttle_DBConn $db) {
 		$this->db = $db;
 	}
 
@@ -244,7 +244,7 @@ abstract class Shuttle_Dumper {
 	}
 }
 
-class Shuttle_Dumper_ShellCommand extends Shuttle_Dumper {
+class WPR_Shuttle_Dumper_ShellCommand extends WPR_Shuttle_Dumper {
 	function dump($export_file_location, $table_prefix='') {
 		$command = 'mysqldump -h ' . escapeshellarg($this->db->host) .
 			' -u ' . escapeshellarg($this->db->username) .
@@ -264,7 +264,7 @@ class Shuttle_Dumper_ShellCommand extends Shuttle_Dumper {
 
 		$command .= ' 2> ' . escapeshellarg($error_file);
 
-		if (Shuttle_Dump_File::is_gzip($export_file_location)) {
+		if (WPR_Shuttle_Dump_File::is_gzip($export_file_location)) {
 			$command .= ' | gzip';
 		}
 
@@ -275,19 +275,19 @@ class Shuttle_Dumper_ShellCommand extends Shuttle_Dumper {
 		if ($return_val !== 0) {
 			$error_text = file_get_contents($error_file);
 			unlink($error_file);
-			throw new Shuttle_Exception('Couldn\'t export database: ' . $error_text);
+			throw new WPR_Shuttle_Exception('Couldn\'t export database: ' . $error_text);
 		}
 
 		unlink($error_file);
 	}
 }
 
-class Shuttle_Dumper_Native extends Shuttle_Dumper {
+class WPR_Shuttle_Dumper_Native extends WPR_Shuttle_Dumper {
 	public function dump($export_file_location, $table_prefix='') {
 		global $wp_reset;
 		$eol = $this->eol;
 
-		$this->dump_file = Shuttle_Dump_File::create($export_file_location);
+		$this->dump_file = WPR_Shuttle_Dump_File::create($export_file_location);
 
 		$this->dump_file->write("-- Generation time: " . date('r') . $eol);
 		$this->dump_file->write("-- Host: " . $this->db->host . $eol);
@@ -334,7 +334,7 @@ class Shuttle_Dumper_Native extends Shuttle_Dumper {
 
 		$data = $this->db->query("SELECT * FROM `$table`");
 
-		$insert = new Shuttle_Insert_Statement($table);
+		$insert = new WPR_Shuttle_Insert_Statement($table);
 
 		while ($row = $this->db->fetch_row($data)) {
 			$row_values = array();
@@ -364,7 +364,7 @@ class Shuttle_Dumper_Native extends Shuttle_Dumper {
 	}
 }
 
-class Shuttle_DBConn {
+class WPR_Shuttle_DBConn {
 	public $host;
 	public $username;
 	public $password;
@@ -384,25 +384,25 @@ class Shuttle_DBConn {
 
 	static function create($options) {
 		if (class_exists('mysqli')) {
-			$class_name = "Shuttle_DBConn_Mysqli";
+			$class_name = "WPR_Shuttle_DBConn_Mysqli";
 		} else {
-			$class_name = "Shuttle_DBConn_Mysql";
+			$class_name = "WPR_Shuttle_DBConn_Mysql";
 		}
 
 		return new $class_name($options);
 	}
 }
 
-class Shuttle_DBConn_Mysql extends Shuttle_DBConn {
+class WPR_Shuttle_DBConn_Mysql extends WPR_Shuttle_DBConn {
 	function connect() {
 		$this->connection = @mysql_connect($this->host, $this->username, $this->password);
 		if (!$this->connection) {
-			throw new Shuttle_Exception("Couldn't connect to the database: " . mysql_error());
+			throw new WPR_Shuttle_Exception("Couldn't connect to the database: " . mysql_error());
 		}
 
 		$select_db_res = mysql_select_db($this->name, $this->connection);
 		if (!$select_db_res) {
-			throw new Shuttle_Exception("Couldn't select database: " . mysql_error($this->connection));
+			throw new WPR_Shuttle_Exception("Couldn't select database: " . mysql_error($this->connection));
 		}
 
 		return true;
@@ -414,7 +414,7 @@ class Shuttle_DBConn_Mysql extends Shuttle_DBConn {
 		}
 		$res = mysql_query($q);
 		if (!$res) {
-			throw new Shuttle_Exception("SQL error: " . mysql_error($this->connection));
+			throw new WPR_Shuttle_Exception("SQL error: " . mysql_error($this->connection));
 		}
 		return $res;
 	}
@@ -455,12 +455,12 @@ class Shuttle_DBConn_Mysql extends Shuttle_DBConn {
 }
 
 
-class Shuttle_DBConn_Mysqli extends Shuttle_DBConn {
+class WPR_Shuttle_DBConn_Mysqli extends WPR_Shuttle_DBConn {
 	function connect() {
 		$this->connection = @new MySQLi($this->host, $this->username, $this->password, $this->name);
 
 		if ($this->connection->connect_error) {
-			throw new Shuttle_Exception("Couldn't connect to the database: " . $this->connection->connect_error);
+			throw new WPR_Shuttle_Exception("Couldn't connect to the database: " . $this->connection->connect_error);
 		}
 
 		return true;
@@ -473,7 +473,7 @@ class Shuttle_DBConn_Mysqli extends Shuttle_DBConn {
 		$res = $this->connection->query($q);
 
 		if (!$res) {
-			throw new Shuttle_Exception("SQL error: " . $this->connection->error);
+			throw new WPR_Shuttle_Exception("SQL error: " . $this->connection->error);
 		}
 
 		return $res;
@@ -514,4 +514,4 @@ class Shuttle_DBConn_Mysqli extends Shuttle_DBConn {
 	}
 }
 
-class Shuttle_Exception extends Exception {};
+class WPR_Shuttle_Exception extends Exception {};

@@ -73,7 +73,7 @@ jQuery(function($) {
 		
 		if(this.opacity)
 			params.fill = new ol.style.Fill({
-				color: WPGMZA.hexOpacityToRGBA(this.color, this.opacity)
+				color: WPGMZA.hexOpacityToRGBA(this.fillColor, this.opacity)
 			});
 			
 		return params;

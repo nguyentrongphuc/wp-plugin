@@ -42,7 +42,7 @@
 
 require_once dirname(__FILE__).'/../Abstract.php';
 
-class Diff_Renderer_Text_Context extends Diff_Renderer_Abstract
+class WPR_Diff_Renderer_Text_Context extends WPR_Diff_Renderer_Abstract
 {
 	/**
 	 * @var array Array of the different opcode tags and how they map to the context diff equivalent.

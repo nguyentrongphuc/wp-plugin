@@ -165,7 +165,7 @@ jQuery(function($) {
 		 */
 		hexOpacityToRGBA: function(colour, opacity)
 		{
-			hex = parseInt(colour.replace(/^#/, ""), 16);
+			var hex = parseInt(colour.replace(/^#/, ""), 16);
 			return [
 				(hex & 0xFF0000) >> 16,
 				(hex & 0xFF00) >> 8,
@@ -403,6 +403,9 @@ jQuery(function($) {
 			var trigger = "userlocationfound";
 			var nativeFunction = "getCurrentPosition";
 			
+			if(WPGMZA.userLocationDenied)
+				return; // NB: The user has declined to share location. Only ask once per session.
+			
 			if(watch)
 			{
 				trigger = "userlocationupdated";
@@ -422,6 +425,12 @@ jQuery(function($) {
 				enableHighAccuracy: true
 			};
 			
+			if(!navigator.geolocation[nativeFunction])
+			{
+				console.warn(nativeFunction + " is not available");
+				return;
+			}
+			
 			navigator.geolocation[nativeFunction](function(position) {
 				if(callback)
 					callback(position);
@@ -440,6 +449,9 @@ jQuery(function($) {
 				},
 				function(err) {
 					console.warn(err.code, err.message);
+					
+					if(err.code == 1)
+						WPGMZA.userLocationDenied = true;
 					
 					if(error)
 						error(err);

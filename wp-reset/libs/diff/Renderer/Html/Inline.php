@@ -42,7 +42,7 @@
 
 require_once dirname(__FILE__).'/Array.php';
 
-class Diff_Renderer_Html_Inline extends Diff_Renderer_Html_Array
+class WPR_Diff_Renderer_Html_Inline extends WPR_Diff_Renderer_Html_Array
 {
 	/**
 	 * Render a and return diff with changes between the two sequences

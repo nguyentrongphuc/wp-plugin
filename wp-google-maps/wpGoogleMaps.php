@@ -3,7 +3,7 @@
 Plugin Name: WP Google Maps
 Plugin URI: https://www.wpgmaps.com
 Description: The easiest to use Google Maps plugin! Create custom Google Maps with high quality markers containing locations, descriptions, images and links. Add your customized map to your WordPress posts and/or pages quickly and easily with the supplied shortcode. No fuss.
-Version: 8.0.8
+Version: 8.0.9
 Author: WP Google Maps
 Author URI: https://www.wpgmaps.com
 Text Domain: wp-google-maps
@@ -11,6 +11,14 @@ Domain Path: /languages
 */
 
 /*
+ * 8.0.9 :- 2019-11-12 :- Medium priority
+ * Updated Dutch translations
+ * Changed Humanitarian tileserver URL to https://
+ * Added workaround for syntax error in class.marker.php on PHP versions 5.5 and below
+ * Fixed "No API key" error showing until the page is refreshed after entering API key in notice
+ * Fixed getCurrentPosition is not a function on setups which don't have this function on the navigator
+ * Fixed issue with OpenLayers circle fill color
+ *
  * 8.0.8 :- 2019-11-04 :- Medium priority
  * Fixed AJAX fallback routes not registered for GET only REST routes
  * Fixed some REST API routes 404ing with plain permalinks when route URL + is replaced with space
@@ -1224,6 +1232,52 @@ function wpgmza_preload_is_in_developer_mode()
 		return false;
 	
 	return isset($globalSettings->developer_mode) && $globalSettings->developer_mode == true;
+}
+
+function wpgmza_fix_marker_class_for_php_below_5_6()
+{
+	try{
+		$file	= plugin_dir_path(__FILE__) . 'includes/class.marker.php';
+		$source	= file_get_contents($file);
+		$url	= parse_url(plugin_dir_url(__FILE__), PHP_URL_PATH);
+		
+		$source = str_replace(
+			"const DEFAULT_ICON = WPGMZA_PLUGIN_DIR_URL . 'images/spotlight-poi2.png';", 
+			"const DEFAULT_ICON = '{$url}images/spotlight-poi2.png';", 
+			$source);
+		
+		file_put_contents($file, $source);
+	}catch(\Exception $e) {
+		
+		add_action('admin_notices', function() use ($e) {
+			
+			?>
+			<div class="notice notice-error is-dismissible">
+				<p>
+					<strong>
+					<?php
+					_e('WP Google Maps', 'wp-google-maps');
+					?></strong>:
+					<?php
+					_e('The plugin cannot load due to syntax which is not supported in PHP 5.6 and below. The plugin could not implement a workaround successfully. We strongly recommend you use PHP 5.6 or above. Technical details are as follows: ', 'wp-google-maps');
+					echo $e->getMessage();
+					?>
+				</p>
+			</div>
+			<?php
+			
+		});
+		
+		return false;
+	}
+	
+	return true;
+}
+
+if(version_compare(phpversion(), '5.6', '<'))
+{
+	if(!wpgmza_fix_marker_class_for_php_below_5_6())
+		return;
 }
 
 if(wpgmza_preload_is_in_developer_mode())

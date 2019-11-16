@@ -3,16 +3,16 @@ Tags: wordpress reset, reset database, reset wordpress database, reset, advanced
 Contributors: WebFactory, wpreset, googlemapswidget, underconstructionpage
 Requires at least: 4.0
 Requires PHP: 5.2
-Tested up to: 5.2
-Stable tag: 1.70
+Tested up to: 5.3
+Stable tag: 1.75
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WP Reset resets a WordPress site, or just the chosen parts, to the default values. It's safe to use with built-in 1-click backup.
+WP Reset resets the whole site, or just the chosen parts, to the default values. It's safe to use with a built-in restore function.
 
 == Description ==
 
-<a href="https://wpreset.com/?utm_source=wordpressorg&utm_medium=content&utm_campaign=wp-reset&utm_term=wp-reset-top">WP Reset</a> quickly resets the site's database to the default installation values without modifying any files. It deletes all customizations and content, or just chosen parts like theme settings. WP Reset is fast and safe to use thanks to the built-in 1-click backup function. It has multiple fail-safe mechanisms so you can never accidentally lose data. WP Reset is extremely helpful for plugin and theme developers. It **speeds up testing & debugging** by providing a quick way to reset settings and re-test code. It's the only WP development tool for non-developers.
+<a href="https://wpreset.com/?utm_source=wordpressorg&utm_medium=content&utm_campaign=wp-reset&utm_term=wp-reset-top">WP Reset</a> quickly resets the site's database to the default installation values without modifying any files. It deletes all customizations and content, or just chosen parts like theme settings. WP Reset is fast and safe to use thanks to the built-in snapshots which provide 1-click restore functionality. It has multiple fail-safe mechanisms so you can never accidentally lose data. WP Reset is extremely helpful for plugin and theme developers. It **speeds up testing & debugging** by providing a quick way to reset settings and re-test code. It's the only WP development tool for non-developers.
 
 https://youtu.be/qMnkCW2PFoI?rel=0
 
@@ -23,7 +23,7 @@ Access WP Reset admin page via the "Tools" menu.
 WP Reset is fully integrated with <a href="https://wordpress.org/plugins/wp-webhooks/">WP Webhooks</a> plugin - a secure, universal system that connects WP to any 3rd party systems and enables you to initiate actions both from WordPress (for instance start a MailChimp campaign once a new user registers), and from any other application (create a new user in WP when a purchase is made on a 3rd party system). View more <a href="https://underconstructionpage.com/wp-webhooks-connect-integrate-wordpress/" target="_blank">practical use-cases</a> that save hours of repetitive work.
 
 
-**Please read carefully before proceeding to understand what WP Reset does, and remember to always create a backup**
+**Please read carefully before proceeding to understand what WP Reset does, and remember to always create a snapshot**
 
 #### Resetting will delete:
 
@@ -40,20 +40,28 @@ WP Reset is fully integrated with <a href="https://wordpress.org/plugins/wp-webh
 
 #### What happens when I click the Reset button?
 
-* remember to always make a backup first
+* remember to always create a snapshot first or a full backup
 * you will have to confirm the action one more time because there is NO UNDO
 * everything will be reset; see bullets above for details
 * site title, WordPress address, site address, site language, search engine visibility settings as well as the current user will be restored
 * you will be logged out, automatically logged in and taken to the admin dashboard
 * WP Reset plugin will be reactivated if that option is chosen in the post-reset options
 
-#### 1-click Backup Tool
+#### Undoing a reset
 
-WP Reset comes with built-in backup functionality. Before deleting any data or running any reset tools make sure you download a fresh backup. Click any of the "download backup" links in the plugin, wait a few seconds till the backup is created and then save it to your computer. WP Reset does not backup any files! So the ZIP you download will only contain the full database; no files are included or saved anywhere.
+Before doing a reset, create a snapshot. The button is located right next to the reset button and it takes less than 10 seconds to create a snapshot. After reset is done, if you need to undo it simply restore the snapshot and that's it.
 
 #### WP-CLI support
 
-WP Reset comes with full WP-CLI support. Help on our WP-CLI commands is available via _wp help reset_. By default the commands have to be confirmed but you can use the `--yes` option to skip confirmation. Instead of the active user, the first user with admin privileges found in the database will be restored after reset. Please be careful when using WP Reset with WP-CLI - as with using the GUI there is no undo.
+WP Reset comes with full WP-CLI support. Help on our WP-CLI commands is available via _wp help reset_. By default the commands have to be confirmed but you can use the `--yes` option to skip confirmation. Instead of the active user, the first user with admin privileges found in the database will be restored after reset. Please be careful when using WP Reset with WP-CLI - as with using the GUI always make a snapshot or backup first.
+
+Currently supported WP-CLI commands:
+
+* `wp reset reset`
+* `wp reset version`
+* `wp reset delete`
+* `wp reset snapshots`
+
 
 #### Database Snapshots
 
@@ -109,6 +117,15 @@ Or if needed, upload manually;
 5. Use our 1-click backup feature before running any reset tools
 
 == Changelog ==
+
+= v1.75 =
+* 2019/11/12
+* bug fixes
+* more GUI improvements
+* updates for WP v5.3
+* removed the 1-click backup tool in favor of snapshots - less confusing & same end result
+* two huge bug fixes thanks to @markwill
+* 1,241,470 downloads
 
 = v1.70 =
 * 2019/09/27

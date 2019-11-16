@@ -166,6 +166,7 @@ class RestAPI extends Factory
 		
 		$data = preg_replace('/^base64/', '', $data);
 		$data = preg_replace('/-/', '/', $data);
+		$data = preg_replace('/ /', '+', $data);
 		$data = base64_decode($data);
 		
 		if(!function_exists('zlib_decode'))
@@ -516,7 +517,7 @@ class RestAPI extends Factory
 			case 'GET':
 				if(preg_match('#/wpgmza/v1/markers/(\d+)#', $route, $m))
 				{
-					$marker = Marker::createInstance($m[1]);
+					$marker = Marker::createInstance($m[1], Crud::SINGLE_READ, isset($_GET['raw_data']));
 					return $marker;
 				}
 				
